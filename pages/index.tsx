@@ -1,12 +1,20 @@
-import { getStaticProps } from 'next/dist/build/templates/pages';
-import {useEffect} from 'react';
 
-getStaticProps({
-  props: {
-    title: 'My Next.js App',
-    description: 'This is a sample Next.js application.',
-  },
-});
+import {useEffect} from 'react';
+interface HomeProps {
+    title: string;
+    description: string;
+}
+export async function getStaticProps(
+  
+) {
+    const prop: HomeProps = {
+        title: 'My Next.js App',
+        description: 'This is a sample application built with Next.js.',
+    };
+    return {
+        props: prop,
+    };
+};
 
 export default function Home() {
   useEffect(() => {
