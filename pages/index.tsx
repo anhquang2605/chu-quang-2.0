@@ -18,7 +18,7 @@ export async function getStaticProps(
 
 export default function Home() {
   useEffect(() => {
-    document.title = 'My Next.js App';
+    document.title = 'Chu Quang';
     
   }, []);
     return (
