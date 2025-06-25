@@ -3,7 +3,7 @@ import style from './jump-section.module.css';
 import Section from './section/section';
 
 interface JumpSectionProps {
-    sections: [string];
+    sections: string[];
 }
 
 const JumpSection: React.FC<JumpSectionProps> = ({sections}: JumpSectionProps) => {
@@ -12,7 +12,7 @@ const JumpSection: React.FC<JumpSectionProps> = ({sections}: JumpSectionProps) =
         sections.forEach((section, index) => {
             jsxCode.push(
                 <Section key={index} title={section} id={section}>
-                    
+                    {section}
                 </Section>
             );
         });
