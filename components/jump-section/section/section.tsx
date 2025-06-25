@@ -1,14 +1,22 @@
 import React from 'react';
 import style from './section.module.css';
 
-interface sectionProps {
-
+export interface Section{
+    id: string;   
 }
 
-const section: React.FC<sectionProps> = ({}) => {
+interface sectionProps {
+    id: string;
+    title: string;
+    children?: React.ReactNode;
+}
+
+const section: React.FC<sectionProps> = ({id, title, children}: sectionProps) => {
     return (
-        <div className={style['section']}>
-            section
+        <div id={id} className={style['section']}>
+            {
+                children
+            }
         </div>
     );
 };
