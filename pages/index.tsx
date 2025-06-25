@@ -1,25 +1,33 @@
 
 import {useEffect} from 'react';
+import { fetchFromGetAPI } from '../libs/api-interactions';
 interface HomeProps {
     title: string;
     description: string;
+    sections: string[];
 }
-export async function getStaticProps(
+export async function getServerSideProps(
   
 ) {
     const prop: HomeProps = {
         title: 'My Next.js App',
         description: 'This is a sample application built with Next.js.',
-    };
+        sections: []
+      };
+    const PATH = 'sections';
+    const options = {};
+    const sections = await fetchFromGetAPI(PATH,  options);
+    prop.sections = sections;
     return {
         props: prop,
     };
 };
 
-export default function Home() {
+export default function Home(props: HomeProps) {
+  const { title, description, sections } = props;
   useEffect(() => {
-    document.title = 'Chu Quang';
-    
+    document.title = title;
+    console.log(sections);
   }, []);
     return (
     <div>
