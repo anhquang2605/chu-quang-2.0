@@ -32,7 +32,7 @@ type PageProps = {
     vertex.fromBufferAttribute(position, i);
     const x = vertex.x;
     const skinIndex =Math.max(0, Math.floor(x / PAGE_SEGMENT_WIDTH));
-    let skinWeight = (x * PAGE_SEGMENT_WIDTH) / PAGE_SEGMENT_WIDTH;
+    let skinWeight = (x % PAGE_SEGMENT_WIDTH) / PAGE_SEGMENT_WIDTH;
     
     skinIndices.push(skinIndex, skinIndex + 1, 0, 0);//only pusing two bones per vertex
     skinWeights.push(1- skinWeight, skinWeight, 0, 0);
