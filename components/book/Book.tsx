@@ -47,8 +47,8 @@ type PageProps = {
     new THREE.MeshStandardMaterial({ color: '#111'}),
     new THREE.MeshStandardMaterial({ color: whiteColor}),
     new THREE.MeshStandardMaterial({ color: whiteColor}),
-    new THREE.MeshStandardMaterial({ color: 'pink'}),
-    new THREE.MeshStandardMaterial({ color: 'blue'}),
+    new THREE.MeshStandardMaterial({ color: 'pink'}),//front face of book
+    new THREE.MeshStandardMaterial({ color: 'blue'}), //back face of book
   ];
 
 const Page: React.FC<PageProps> = () => {
@@ -91,10 +91,7 @@ const Page: React.FC<PageProps> = () => {
 
   return (
     <group ref={ref}>
-      <mesh >
-        <primitive object={pageGeometry} attach={"geometry" }/>
-        <meshStandardMaterial color="#ffffff" />
-      </mesh>
+      <primitive object={manualSkinnedMesh} ref={skinnedMeshRef} />
     </group>
   );
 };
