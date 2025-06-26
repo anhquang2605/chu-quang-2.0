@@ -2,9 +2,12 @@ import React, { useMemo, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
+import { pages } from './book-asset/pages';
 
 type PageProps = {
   rotation?: number;
+  number?: number;
+  data?: any;
 };
 
 //set up before page
@@ -83,11 +86,7 @@ const Page: React.FC<PageProps> = () => {
     mesh.bind(skeleton);
     return mesh;
   }, []);
-  useFrame(({ clock }) => {
-    if (ref.current) {
-      //ref.current.rotation.y = Math.sin(clock.getElapsedTime()) * rotation;
-    }
-  });
+ 
 
   return (
     <group ref={ref}>
@@ -99,10 +98,13 @@ const Page: React.FC<PageProps> = () => {
 const Book: React.FC = () => {
   return (
     <group>
-      {/* Book cover (back) */}
-
-      {/* Animated page */}
-      <Page />
+      <group>
+        {
+          [...pages].map((pageD, index) => (
+            <Page key={index} number={index} data={pageD} />
+          ))
+        }
+      </group>
     </group>
   );
 };
