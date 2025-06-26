@@ -58,7 +58,7 @@ const Page: React.FC<PageProps> = () => {
   
   const manualSkinnedMesh = useMemo(() => {
     const bones = [];
-    for (let i = 0; i < PAGE_SEGMENT_COUNT; i++) {
+    for (let i = 0; i <= PAGE_SEGMENT_COUNT; i++) {
       const bone = new THREE.Bone();
       bones.push(bone);
       if (i === 0) {
