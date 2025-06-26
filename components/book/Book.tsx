@@ -54,6 +54,8 @@ type PageProps = {
 const Page: React.FC<PageProps> = () => {
   const ref = useRef<THREE.Mesh>(null);
 
+  const skinnedMeshRef = useRef<THREE.SkinnedMesh>(null);
+  
   const manualSkinnedMesh = useMemo(() => {
     const bones = [];
     for (let i = 0; i < PAGE_SEGMENT_COUNT; i++) {
@@ -77,7 +79,9 @@ const Page: React.FC<PageProps> = () => {
     mesh.castShadow = true;
     mesh.receiveShadow = true;
     mesh.frustumCulled = false; // Disable frustum culling for the mesh, what is this? https://threejs.org/docs/#api/en/core/Object3D.frustumCulled
-
+    mesh.add(skeleton.bones[0]); // Add the first bone to the mesh
+    mesh.bind(skeleton);
+    return mesh;
   }, []);
   useFrame(({ clock }) => {
     if (ref.current) {
