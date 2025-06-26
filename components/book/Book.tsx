@@ -15,10 +15,14 @@ const Page: React.FC<PageProps> = ({ rotation }) => {
       ref.current.rotation.y = Math.sin(clock.getElapsedTime()) * rotation;
     }
   });
-
+  const PAGE_WIDTH = 1;
+  const PAGE_HEIGHT = 1.5;
+  const PAGE_THICKNESS = 0.01;
+  const PAGE_SEGMENT_COUNT = 30;
+  const PAGE_SEGMENT_WIDTH = PAGE_WIDTH / PAGE_SEGMENT_COUNT;
   return (
     <mesh ref={ref} position={[0, 0, 0.01]}>
-      <boxGeometry args={[1, 1.5, 0.01]} />
+      <boxGeometry args={[PAGE_WIDTH, PAGE_HEIGHT, PAGE_THICKNESS, PAGE_SEGMENT_COUNT]} />
       <meshStandardMaterial color="#ffffff" />
     </mesh>
   );
