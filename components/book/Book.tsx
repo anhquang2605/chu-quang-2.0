@@ -52,4 +52,4 @@ const BookLoader: React.FC = () => {
   );
 };
 
-export default Book;
+export default BookLoader;

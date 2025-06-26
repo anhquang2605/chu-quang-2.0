@@ -18,7 +18,8 @@ export async function getServerSideProps(
       };
     const PATH: string = 'sections';
     const options: any = {};
-    const sections = await fetchFromGetAPI(PATH,  options);
+    //const sections = await fetchFromGetAPI(PATH,  options);
+    const sections: Section[] = [];
     prop.sections = sections.reduce((acc: string[], section: Section) => {
         if (section.title) {
             acc.push(section.title)
