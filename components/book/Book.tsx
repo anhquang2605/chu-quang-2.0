@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
@@ -7,15 +7,7 @@ type PageProps = {
   rotation?: number;
 };
 
-
-const Page: React.FC<PageProps> = () => {
-  const ref = useRef<THREE.Mesh>(null);
-
-  useFrame(({ clock }) => {
-    if (ref.current) {
-      //ref.current.rotation.y = Math.sin(clock.getElapsedTime()) * rotation;
-    }
-  });
+//set up before page
   const PAGE_WIDTH = 1;
   const PAGE_HEIGHT = 1.5;
   const PAGE_THICKNESS = 0.01;
@@ -48,6 +40,46 @@ const Page: React.FC<PageProps> = () => {
   pageGeometry.setAttribute('skinIndex', new THREE.Uint16BufferAttribute(skinIndices, 4));
   pageGeometry.setAttribute('skinWeight', new THREE.Float32BufferAttribute(skinWeights, 4));
   
+  const whiteColor = new THREE.Color('white');
+  
+  const pageMaterials = [
+    new THREE.MeshStandardMaterial({ color: whiteColor}),
+    new THREE.MeshStandardMaterial({ color: '#111'}),
+    new THREE.MeshStandardMaterial({ color: whiteColor}),
+    new THREE.MeshStandardMaterial({ color: whiteColor}),
+    new THREE.MeshStandardMaterial({ color: 'pink'}),
+    new THREE.MeshStandardMaterial({ color: 'blue'}),
+  ];
+
+const Page: React.FC<PageProps> = () => {
+  const ref = useRef<THREE.Mesh>(null);
+
+  const manualSkinnedMesh = useMemo(() => {
+    const bones = [];
+    for (let i = 0; i < PAGE_SEGMENT_COUNT; i++) {
+      const bone = new THREE.Bone();
+      bones.push(bone);
+      if (i === 0) {
+        bone.position.x = 0;
+      } else {
+        bone.position.x = PAGE_SEGMENT_WIDTH; 
+      }
+      if (i > 0) {
+        bones[i - 1].add(bone); // link the bone to the previous one
+      }
+    }
+    
+    const skeleton = new THREE.Skeleton(bones);
+
+    const materials = pageMaterials;
+    return new THREE.SkinnedMesh(pageGeometry, new THREE.MeshStandardMaterial({ color: '#ffffff' }));
+  }, []);
+  useFrame(({ clock }) => {
+    if (ref.current) {
+      //ref.current.rotation.y = Math.sin(clock.getElapsedTime()) * rotation;
+    }
+  });
+
   return (
     <group ref={ref}>
       <mesh >
