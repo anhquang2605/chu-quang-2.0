@@ -29,7 +29,25 @@ const Page: React.FC<PageProps> = () => {
     PAGE_SEGMENT_COUNT,
     PAGE_SEGMENT_HEIGHT
   );
+  
   pageGeometry.translate( PAGE_WIDTH / 2, 0, 0);
+
+  const position = pageGeometry.attributes.position;
+  const vertex = new THREE.Vector3();
+  const skinIndices = []; //bones indices
+  const skinWeights = [];
+  for (let i = 0; i < position.count; i++) {
+    vertex.fromBufferAttribute(position, i);
+    const x = vertex.x;
+    const skinIndex =Math.max(0, Math.floor(x / PAGE_SEGMENT_WIDTH));
+    let skinWeight = (x * PAGE_SEGMENT_WIDTH) / PAGE_SEGMENT_WIDTH;
+    
+    skinIndices.push(skinIndex, skinIndex + 1, 0, 0);//only pusing two bones per vertex
+    skinWeights.push(1- skinWeight, skinWeight, 0, 0);
+  }
+  pageGeometry.setAttribute('skinIndex', new THREE.Uint16BufferAttribute(skinIndices, 4));
+  pageGeometry.setAttribute('skinWeight', new THREE.Float32BufferAttribute(skinWeights, 4));
+  
   return (
     <group ref={ref}>
       <mesh >
