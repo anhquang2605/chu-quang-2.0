@@ -19,12 +19,22 @@ const Page: React.FC<PageProps> = ({ rotation }) => {
   const PAGE_HEIGHT = 1.5;
   const PAGE_THICKNESS = 0.01;
   const PAGE_SEGMENT_COUNT = 30;
+  const PAGE_SEGMENT_HEIGHT = 2;
   const PAGE_SEGMENT_WIDTH = PAGE_WIDTH / PAGE_SEGMENT_COUNT;
+  const boxGeometry = new THREE.BoxGeometry(
+    PAGE_WIDTH,
+    PAGE_HEIGHT,
+    PAGE_THICKNESS,
+    PAGE_SEGMENT_COUNT,
+    PAGE_SEGMENT_HEIGHT
+  );
   return (
-    <mesh ref={ref} position={[0, 0, 0.01]}>
-      <boxGeometry args={[PAGE_WIDTH, PAGE_HEIGHT, PAGE_THICKNESS, PAGE_SEGMENT_COUNT]} />
-      <meshStandardMaterial color="#ffffff" />
-    </mesh>
+    <group ref={ref}>
+      <mesh scale={0.1} >
+        <primitive object={boxGeometry} attach={"geometry" }/>
+        <meshStandardMaterial color="#ffffff" />
+      </mesh>
+    </group>
   );
 };
 
@@ -32,10 +42,6 @@ const Book: React.FC = () => {
   return (
     <group>
       {/* Book cover (back) */}
-      <mesh position={[0, 0, -0.01]}>
-        <boxGeometry args={[1, 1.5, 0.02]} />
-        <meshStandardMaterial color="#5a3e2b" />
-      </mesh>
 
       {/* Animated page */}
       <Page rotation={0.5} />
