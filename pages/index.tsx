@@ -2,6 +2,7 @@ import {useEffect} from 'react';
 import { fetchFromGetAPI } from '../libs/api-interactions';
 import { Section } from '../types/db';
 import JumpSection from '../components/jump-section/jump-section';
+import Book from '../components/book/Book';
 interface HomeProps {
     title: string;
     description: string;
@@ -40,6 +41,7 @@ export default function Home(props: HomeProps) {
         <p>This is a sample application built with Next.js.</p>
         <p>Explore the features and enjoy the experience!</p>
         <JumpSection sections={sections} />
+        <Book />
     </div>
   );
 }
