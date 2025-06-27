@@ -86,7 +86,21 @@ const Page: React.FC<PageProps> = () => {
     mesh.bind(skeleton);
     return mesh;
   }, []);
- 
+  useFrame(() => {
+ if (!skinnedMeshRef.current) return;
+
+  const bones = skinnedMeshRef.current.skeleton.bones;
+  const time = Date.now() * 0.001;
+
+  // Animate bones (e.g., page wave effect)
+  bones.forEach((bone, i) => {
+    if (i > 0) {
+      bone.rotation.z = Math.sin(time + i * 0.2) * 0.1;
+    }
+    // Explicitly update matrix
+    bone.updateMatrixWorld(); // ✅ Critical fix!
+  });
+  });
 
   return (
     <group ref={ref}>
@@ -112,12 +126,10 @@ const Book: React.FC = () => {
 const BookLoader: React.FC = () => {
   return (
     <div style={{ width: '100vw', height: '100vh', background: '#111' }}>
-      <Canvas camera={{ position: [0, 0, 3] }}>
-        <ambientLight />
-        <directionalLight position={[2, 2, 2]} />
-        <OrbitControls enableZoom={false} enablePan={false} />
+      <Canvas>
+          <Book />
       </Canvas>
-       <Book />
+     
     </div>
   );
 };
