@@ -116,9 +116,9 @@ const BookLoader: React.FC = () => {
       <Canvas camera={{ position: [0, 0, 3] }}>
         <ambientLight />
         <directionalLight position={[2, 2, 2]} />
-        <Book />
         <OrbitControls enableZoom={false} enablePan={false} />
       </Canvas>
+       <Book />
     </div>
   );
 };
