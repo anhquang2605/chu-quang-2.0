@@ -41,9 +41,7 @@ type PageProps = {
   }
   pageGeometry.setAttribute('skinIndex', new THREE.Uint16BufferAttribute(skinIndices, 4));
   pageGeometry.setAttribute('skinWeight', new THREE.Float32BufferAttribute(skinWeights, 4));
-  
   const whiteColor = new THREE.Color('white');
-  
   const pageMaterials = [
     new THREE.MeshStandardMaterial({ color: whiteColor}),
     new THREE.MeshStandardMaterial({ color: '#111'}),
@@ -128,7 +126,6 @@ const BookLoader: React.FC = () => {
       <Canvas>
           <Book />
       </Canvas>
-     
     </div>
   );
 };
