@@ -39,6 +39,8 @@ type PageProps = {
     skinIndices.push(skinIndex, skinIndex + 1, 0, 0);//only pusing two bones per vertex
     skinWeights.push(1- skinWeight, skinWeight, 0, 0);
   }
+  console.log('skinIndices', skinIndices);
+  console.log('skinWeights', skinWeights);
   pageGeometry.setAttribute('skinIndex', new THREE.Uint16BufferAttribute(skinIndices, 4));
   pageGeometry.setAttribute('skinWeight', new THREE.Float32BufferAttribute(skinWeights, 4));
   const whiteColor = new THREE.Color('white');
@@ -86,22 +88,7 @@ const Page: React.FC<PageProps> = () => {
     mesh.bind(skeleton);
     return mesh;
   }, []);
-  useFrame(() => {
- if (!skinnedMeshRef.current) return;
-
-  const bones = skinnedMeshRef.current.skeleton.bones;
-  const time = Date.now() * 0.001;
-
-  // Animate bones (e.g., page wave effect)
-  bones.forEach((bone, i) => {
-    if (i > 0) {
-      bone.rotation.z = Math.sin(time + i * 0.2) * 0.1;
-    }
-    // Explicitly update matrix
-    bone.updateMatrixWorld(); // ✅ Critical fix!
-  });
-  });
-
+  
   return (
     <group ref={ref}>
       <primitive object={manualSkinnedMesh} ref={skinnedMeshRef} />
