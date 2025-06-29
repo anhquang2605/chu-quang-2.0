@@ -75,13 +75,29 @@ const Page: React.FC<PageProps> = () => {
     mesh.castShadow = true;
     mesh.receiveShadow = true;
     mesh.frustumCulled = false; // Disable frustum culling for the mesh, what is this? https://threejs.org/docs/#api/en/core/Object3D.frustumCulled
-    //mesh.add(skeleton.bones[0]); // Add the first bone to the mesh
+    mesh.add(skeleton.bones[0]); // Add the first bone to the mesh
     mesh.bind(skeleton);
     return mesh;
   }, []);
-  useEffect(() => {
-   
-  }, []);
+  /* useEffect(() => {
+  const mesh = manualSkinnedMesh;
+  if (!mesh) return;
+
+  // Manually trigger matrix updates
+  mesh.updateMatrixWorld(true);
+  mesh.skeleton.bones.forEach((bone) => {
+    bone.updateMatrixWorld(true);
+  });
+
+  // Test: Safely apply a bone transform
+  const target = new THREE.Vector3();
+  try {
+    mesh.applyBoneTransform(0, target);
+    console.log("Initial bone transform (safe):", target);
+  } catch (err) {
+    console.error("applyBoneTransform failed:", err);
+  }
+}, [manualSkinnedMesh]); */
   return (
     manualSkinnedMesh &&
     <group ref={ref}>
