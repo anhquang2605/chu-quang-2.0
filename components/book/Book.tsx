@@ -39,8 +39,6 @@ type PageProps = {
     skinIndices.push(skinIndex, skinIndex + 1, 0, 0);//only pusing two bones per vertex
     skinWeights.push(1- skinWeight, skinWeight, 0, 0);
   }
-  console.log('skinIndices', skinIndices);
-  console.log('skinWeights', skinWeights);
   pageGeometry.setAttribute('skinIndex', new THREE.Uint16BufferAttribute(skinIndices, 4));
   pageGeometry.setAttribute('skinWeight', new THREE.Float32BufferAttribute(skinWeights, 4));
   const whiteColor = new THREE.Color('white');
@@ -78,9 +76,6 @@ const Page: React.FC<PageProps> = () => {
     const materials = pageMaterials;
     
     const mesh = new THREE.SkinnedMesh(pageGeometry, materials);
-    if(!mesh) {
-      return {};
-    }
     mesh.castShadow = true;
     mesh.receiveShadow = true;
     mesh.frustumCulled = false; // Disable frustum culling for the mesh, what is this? https://threejs.org/docs/#api/en/core/Object3D.frustumCulled
