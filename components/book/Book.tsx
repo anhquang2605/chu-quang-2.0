@@ -87,6 +87,7 @@ const Page: React.FC<PageProps> = () => {
     console.log(manualSkinnedMesh)
   }, []);
   return (
+    manualSkinnedMesh &&
     <group ref={ref}>
       <primitive object={manualSkinnedMesh} ref={skinnedMeshRef} />
     </group>
