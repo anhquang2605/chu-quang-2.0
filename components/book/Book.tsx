@@ -53,9 +53,7 @@ type PageProps = {
 
 const Page: React.FC<PageProps> = () => {
   const ref = useRef<THREE.Mesh>(null);
-
   const skinnedMeshRef = useRef<THREE.SkinnedMesh>(null);
-  
   const manualSkinnedMesh = useMemo(() => {
     const bones = [];
     for (let i = 0; i <= PAGE_SEGMENT_COUNT; i++) {
@@ -72,9 +70,7 @@ const Page: React.FC<PageProps> = () => {
     }
     
     const skeleton = new THREE.Skeleton(bones);
-
     const materials = pageMaterials;
-    
     const mesh: THREE.SkinnedMesh = new THREE.SkinnedMesh(pageGeometry, materials);
     mesh.castShadow = true;
     mesh.receiveShadow = true;
@@ -84,10 +80,10 @@ const Page: React.FC<PageProps> = () => {
     return mesh;
   }, []);
   useEffect(() => {
-    console.log(manualSkinnedMesh)
+   
   }, []);
   return (
-    manualSkinnedMesh&&
+    manualSkinnedMesh &&
     <group ref={ref}>
       <primitive object={manualSkinnedMesh} ref={skinnedMeshRef} />
     </group>
