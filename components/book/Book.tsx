@@ -75,7 +75,7 @@ const Page: React.FC<PageProps> = () => {
     mesh.castShadow = true;
     mesh.receiveShadow = true;
     mesh.frustumCulled = false; // Disable frustum culling for the mesh, what is this? https://threejs.org/docs/#api/en/core/Object3D.frustumCulled
-    mesh.add(skeleton.bones[0]); // Add the first bone to the mesh
+    //mesh.add(skeleton.bones[0]); // Add the first bone to the mesh
     mesh.bind(skeleton);
     return mesh;
   }, []);
