@@ -75,7 +75,7 @@ const Page: React.FC<PageProps> = () => {
 
     const materials = pageMaterials;
     
-    const mesh = new THREE.SkinnedMesh(pageGeometry, materials);
+    const mesh: THREE.SkinnedMesh = new THREE.SkinnedMesh(pageGeometry, materials);
     mesh.castShadow = true;
     mesh.receiveShadow = true;
     mesh.frustumCulled = false; // Disable frustum culling for the mesh, what is this? https://threejs.org/docs/#api/en/core/Object3D.frustumCulled
@@ -87,7 +87,7 @@ const Page: React.FC<PageProps> = () => {
     console.log(manualSkinnedMesh)
   }, []);
   return (
-    manualSkinnedMesh &&
+    manualSkinnedMesh&&
     <group ref={ref}>
       <primitive object={manualSkinnedMesh} ref={skinnedMeshRef} />
     </group>
