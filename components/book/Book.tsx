@@ -76,6 +76,9 @@ const Page: React.FC<PageProps> = () => {
     const materials = pageMaterials;
     
     const mesh = new THREE.SkinnedMesh(pageGeometry, materials);
+    if(!mesh) {
+      return {};
+    }
     mesh.castShadow = true;
     mesh.receiveShadow = true;
     mesh.frustumCulled = false; // Disable frustum culling for the mesh, what is this? https://threejs.org/docs/#api/en/core/Object3D.frustumCulled
