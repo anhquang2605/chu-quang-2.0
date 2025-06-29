@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { pages } from './book-asset/pages';
@@ -83,7 +83,9 @@ const Page: React.FC<PageProps> = () => {
     mesh.bind(skeleton);
     return mesh;
   }, []);
-  
+  useEffect(() => {
+    console.log(manualSkinnedMesh)
+  }, []);
   return (
     <group ref={ref}>
       <primitive object={manualSkinnedMesh} ref={skinnedMeshRef} />
