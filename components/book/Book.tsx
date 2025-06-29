@@ -13,7 +13,7 @@ type PageProps = {
   const PAGE_WIDTH = 1;
   const PAGE_HEIGHT = 1.5;
   const PAGE_THICKNESS = 0.01;
-  const PAGE_SEGMENT_COUNT = 1;
+  const PAGE_SEGMENT_COUNT = 3;
   const PAGE_SEGMENT_HEIGHT = 2;
   const PAGE_SEGMENT_WIDTH = PAGE_WIDTH / PAGE_SEGMENT_COUNT;
   const pageGeometry = new THREE.BoxGeometry(
@@ -33,7 +33,8 @@ type PageProps = {
   for (let i = 0; i < position.count; i++) {
     vertex.fromBufferAttribute(position, i);
     const x = vertex.x;
-    const skinIndex =Math.max(0, Math.floor(x / PAGE_SEGMENT_WIDTH));
+    let skinIndex =Math.max(0, Math.floor(x / PAGE_SEGMENT_WIDTH));
+    if (skinIndex >= PAGE_SEGMENT_COUNT) skinIndex = PAGE_SEGMENT_COUNT - 1;
     let skinWeight = (x % PAGE_SEGMENT_WIDTH) / PAGE_SEGMENT_WIDTH;
     
     skinIndices.push(skinIndex, skinIndex + 1, 0, 0);//only pusing two bones per vertex
