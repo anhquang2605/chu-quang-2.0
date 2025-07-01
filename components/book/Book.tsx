@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { pages } from './book-asset/pages';
+import { useHelper } from '@react-three/drei';
 
 type PageProps = {
   rotation?: number;
@@ -80,6 +81,10 @@ const Page: React.FC<PageProps> = () => {
     mesh.bind(skeleton);
     return mesh;
   }, []);
+  if(skinnedMeshRef.current && skinnedMeshRef) {
+     useHelper(skinnedMeshRef, THREE.SkeletonHelper); // Add a skeleton helper to visualize the bones
+  }
+ 
   //Make the page turn one by one using the useFrame hook, the book has skeleton animation, so we can use the skinned mesh to animate the page turning
   useFrame((state, delta) => {
     if (!manualSkinnedMesh) return;
