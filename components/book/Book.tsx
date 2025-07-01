@@ -86,6 +86,15 @@ const Page: React.FC<PageProps> = () => {
     if (!skinnedMeshRef.current) return;
     // Rotate the page around the y-axis, simulating a page turn
     // Limit the rotation to 90 degrees (PI/2 radians)
+    //animate the page turning with bones and skeleton
+    if (skinnedMeshRef.current.skeleton) {
+      const bones = skinnedMeshRef.current.skeleton.bones;
+      for (let i = 0; i < bones.length; i++) {
+        bones[i].rotation.y += delta;
+        bones[i].rotation.y = Math.min(bones[i].rotation.y, Math.PI / 2); // Limit the rotation to 90 degrees
+        //page only turns and fold like snapping
+      }
+    }
     if (skinnedMeshRef.current) {
       skinnedMeshRef.current.rotation.y += delta;
       skinnedMeshRef.current.rotation.y = Math.min(skinnedMeshRef.current.rotation.y, Math.PI / 2); // Limit the rotation to 90 degrees
