@@ -80,8 +80,12 @@ const Page: React.FC<PageProps> = () => {
     mesh.bind(skeleton);
     return mesh;
   }, []);
-  //Make the page turn one by one using the useFrame hook
+  //Make the page turn one by one using the useFrame hook, the book has skeleton animation, so we can use the skinned mesh to animate the page turning
   useFrame((state, delta) => {
+    if (!manualSkinnedMesh) return;
+    if (!skinnedMeshRef.current) return;
+    // Rotate the page around the y-axis, simulating a page turn
+    // Limit the rotation to 90 degrees (PI/2 radians)
     if (skinnedMeshRef.current) {
       skinnedMeshRef.current.rotation.y += delta;
       skinnedMeshRef.current.rotation.y = Math.min(skinnedMeshRef.current.rotation.y, Math.PI / 2); // Limit the rotation to 90 degrees
@@ -118,7 +122,7 @@ const BookLoader: React.FC = () => {
           <Book />
           <ambientLight intensity={0.5} />
           <directionalLight position={[5, 5, 5]} intensity={1} />
-          <camera position={[0, 0, 5]} rotation={[0, 0, 0]} />
+          <camera position={[0, 0, 5]}  />
       </Canvas>
     </div>
   );
