@@ -112,10 +112,10 @@ const Book: React.FC = () => {
     <group>
       <group>
         {
-          /* [...pages].map((pageD, index) => (
+          [...pages].map((pageD, index) => (
             <Page key={index} number={index} data={pageD} />
-          )) */
-         <Page number={0} data={pages[0]} />
+          )) 
+
         }
       </group>
     </group>
