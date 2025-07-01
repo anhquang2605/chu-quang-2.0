@@ -129,6 +129,7 @@ const BookLoader: React.FC = () => {
           <Book />
           <ambientLight intensity={0.5} />
           <directionalLight position={[5, 5, 5]} intensity={1} />
+          <camera position={[0, 0, 5]} rotation={[0, 0, 0]} />
       </Canvas>
     </div>
   );
