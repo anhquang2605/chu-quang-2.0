@@ -80,6 +80,14 @@ const Page: React.FC<PageProps> = () => {
     mesh.bind(skeleton);
     return mesh;
   }, []);
+  //Make the page turn one by one using the useFrame hook
+  useFrame((state, delta) => {
+    if (skinnedMeshRef.current) {
+      skinnedMeshRef.current.rotation.y += delta;
+      skinnedMeshRef.current.rotation.y = Math.min(skinnedMeshRef.current.rotation.y, Math.PI / 2); // Limit the rotation to 90 degrees
+    }
+  });
+    
   return (
     manualSkinnedMesh &&
     <group ref={ref}>
