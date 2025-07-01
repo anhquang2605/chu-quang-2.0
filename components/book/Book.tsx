@@ -80,25 +80,6 @@ const Page: React.FC<PageProps> = () => {
     mesh.bind(skeleton);
     return mesh;
   }, []);
-  /* useEffect(() => {
-  const mesh = manualSkinnedMesh;
-  if (!mesh) return;
-
-  // Manually trigger matrix updates
-  mesh.updateMatrixWorld(true);
-  mesh.skeleton.bones.forEach((bone) => {
-    bone.updateMatrixWorld(true);
-  });
-
-  // Test: Safely apply a bone transform
-  const target = new THREE.Vector3();
-  try {
-    mesh.applyBoneTransform(0, target);
-    console.log("Initial bone transform (safe):", target);
-  } catch (err) {
-    console.error("applyBoneTransform failed:", err);
-  }
-}, [manualSkinnedMesh]); */
   return (
     manualSkinnedMesh &&
     <group ref={ref}>
