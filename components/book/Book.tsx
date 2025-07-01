@@ -127,6 +127,8 @@ const BookLoader: React.FC = () => {
     <div style={{ width: '100vw', height: '100vh', background: '#111' }}>
       <Canvas>
           <Book />
+          <ambientLight intensity={0.5} />
+          <directionalLight position={[5, 5, 5]} intensity={1} />
       </Canvas>
     </div>
   );
