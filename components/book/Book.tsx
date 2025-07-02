@@ -54,6 +54,7 @@ type PageProps = {
   ];
 
 const Page: React.FC<PageProps> = ({ number, data, front, back}) => {
+  //tried moving textures to the same folder, still have problem loading the pictures
   const [picture, picture2, pictureRoughness] = useTexture([
     `./textures/${front}.jpg`,
     `./textures/${back}.jpg`,
