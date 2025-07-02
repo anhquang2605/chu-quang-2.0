@@ -3,7 +3,6 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { pages } from './book-asset/pages';
 import { useHelper, useTexture } from '@react-three/drei';
-import { roughness } from 'three/tsl';
 
 type PageProps = {
   rotation?: number;
@@ -56,11 +55,11 @@ type PageProps = {
 
 const Page: React.FC<PageProps> = ({ number, data, front, back}) => {
   const [picture, picture2, pictureRoughness] = useTexture([
-    `../../textures/${front}.jpg`,
-    `../../textures/${back}.jpg`,
+    `./textures/${front}.jpg`,
+    `./textures/${back}.jpg`,
    ...(
     number === 0 || number === pages.length - 1 ?
-     [`../../textures/book-cover-roughness.jpg`] : []
+     [`./textures/book-cover-roughness.jpg`] : []
    )
   ])
   const ref = useRef<THREE.Mesh>(null);
@@ -154,7 +153,7 @@ const Book: React.FC = () => {
       <group>
         {
           [...pages].map((pageD, index) => (
-            <Page key={index} number={index} data={pageD} />
+            <Page key={index} number={index} front={pageD.front} back={pageD.back} />
           )) 
 
         }
