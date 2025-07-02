@@ -81,9 +81,7 @@ const Page: React.FC<PageProps> = () => {
     mesh.bind(skeleton);
     return mesh;
   }, []);
-  if(skinnedMeshRef.current && skinnedMeshRef) {
-     useHelper(skinnedMeshRef, THREE.SkeletonHelper); // Add a skeleton helper to visualize the bones
-  }
+
  
   //Make the page turn one by one using the useFrame hook, the book has skeleton animation, so we can use the skinned mesh to animate the page turning
   useFrame((state, delta) => {
