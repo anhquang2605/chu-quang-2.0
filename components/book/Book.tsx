@@ -2,7 +2,8 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { pages } from './book-asset/pages';
-import { useHelper, useTexture } from '@react-three/drei';
+import { OrbitControls, useHelper, useTexture } from '@react-three/drei';
+import { Orbit } from 'next/font/google';
 
 type PageProps = {
   rotation?: number;
@@ -168,10 +169,17 @@ const BookLoader: React.FC = () => {
   return (
     <div style={{ width: '100vw', height: '100vh', background: '#111' }}>
       <Canvas>
+          <OrbitControls />
           <Book />
-          <ambientLight intensity={0.5} />
-          <directionalLight position={[5, 5, 5]} intensity={1} />
-          <camera position={[0, 0, 5]}  />
+          
+          <directionalLight 
+              position={[2, 5, 2]} 
+              intensity={2.5} 
+              castShadow
+              shadow-mapSize-width={2048}
+              shadow-mapSize-height={2048}
+              shadow-bias={-0.0001}
+          />
       </Canvas>
     </div>
   );
