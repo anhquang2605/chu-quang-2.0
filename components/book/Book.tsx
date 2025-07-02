@@ -3,6 +3,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { pages } from './book-asset/pages';
 import { useHelper } from '@react-three/drei';
+import { roughness } from 'three/tsl';
 
 type PageProps = {
   rotation?: number;
@@ -49,8 +50,6 @@ type PageProps = {
     new THREE.MeshStandardMaterial({ color: '#111'}),
     new THREE.MeshStandardMaterial({ color: whiteColor}),
     new THREE.MeshStandardMaterial({ color: whiteColor}),
-    new THREE.MeshStandardMaterial({ color: 'pink'}),//front face of book
-    new THREE.MeshStandardMaterial({ color: 'blue'}), //back face of book
   ];
 
 const Page: React.FC<PageProps> = () => {
@@ -75,8 +74,18 @@ const Page: React.FC<PageProps> = () => {
     const materials = [...pageMaterials,
       new THREE.MeshStandardMaterial({
         color: whiteColor,
-        map: 
-      })
+        map: picture,
+        ...(
+          number === 0 
+          ? {
+            roughnessMap: pictureRoughness,
+            } 
+          : {
+              roughness: 0.1,
+            }
+         )
+      }),
+      
      ];
     const mesh: THREE.SkinnedMesh = new THREE.SkinnedMesh(pageGeometry, materials);
     mesh.castShadow = true;
