@@ -85,7 +85,19 @@ const Page: React.FC<PageProps> = () => {
             }
          )
       }),
-      
+      new THREE.MeshStandardMaterial({
+        color: whiteColor,
+        map: picture2,
+        ...(
+          number === pages.length - 1 
+          ? {
+            roughnessMap: pictureRoughness,
+            } 
+          : {
+              roughness: 0.1,
+            }
+         )
+      })
      ];
     const mesh: THREE.SkinnedMesh = new THREE.SkinnedMesh(pageGeometry, materials);
     mesh.castShadow = true;
