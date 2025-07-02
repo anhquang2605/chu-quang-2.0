@@ -72,7 +72,12 @@ const Page: React.FC<PageProps> = () => {
     }
     
     const skeleton = new THREE.Skeleton(bones);
-    const materials = pageMaterials;
+    const materials = [...pageMaterials,
+      new THREE.MeshStandardMaterial({
+        color: whiteColor,
+        map: 
+      })
+     ];
     const mesh: THREE.SkinnedMesh = new THREE.SkinnedMesh(pageGeometry, materials);
     mesh.castShadow = true;
     mesh.receiveShadow = true;
