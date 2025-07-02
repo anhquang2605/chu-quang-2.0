@@ -63,6 +63,7 @@ const Page: React.FC<PageProps> = ({ number, data, front, back}) => {
      [`textures/book-cover-roughness.jpg`] : []
    )
   ])
+  picture.colorSpace = picture2.colorSpace
   const ref = useRef<THREE.Mesh>(null);
   const skinnedMeshRef = useRef<THREE.SkinnedMesh>(null);
   const manualSkinnedMesh = useMemo(() => {
@@ -126,7 +127,7 @@ const Page: React.FC<PageProps> = ({ number, data, front, back}) => {
     // Rotate the page around the y-axis, simulating a page turn
     // Limit the rotation to 90 degrees (PI/2 radians)
     //animate the page turning with bones and skeleton
-    if (skinnedMeshRef.current.skeleton) {
+    /* if (skinnedMeshRef.current.skeleton) {
       const bones = skinnedMeshRef.current.skeleton.bones;
       for (let i = 0; i < bones.length; i++) {
         bones[i].rotation.y += delta;
@@ -137,7 +138,7 @@ const Page: React.FC<PageProps> = ({ number, data, front, back}) => {
     if (skinnedMeshRef.current) {
       skinnedMeshRef.current.rotation.y += delta;
       skinnedMeshRef.current.rotation.y = Math.min(skinnedMeshRef.current.rotation.y, Math.PI / 2); // Limit the rotation to 90 degrees
-    }
+    } */
   });
     
   return (
