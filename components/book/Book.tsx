@@ -11,6 +11,7 @@ type PageProps = {
   data?: any;
   front?: string;
   back?: string;
+  page?: string;
 };
 
 //set up before page
@@ -69,6 +70,7 @@ const Page: React.FC<PageProps> = ({ number, data, front, back}) => {
      [`/textures/book-cover-roughness.jpg`] : []
    )
   ])
+  //to set the color space of the textures to sRGB, changing them from  too bright to normal colorating
   picture.colorSpace = picture2.colorSpace = THREE.SRGBColorSpace
   const ref = useRef<THREE.Mesh>(null);
   const skinnedMeshRef = useRef<THREE.SkinnedMesh>(null);
@@ -150,7 +152,13 @@ const Page: React.FC<PageProps> = ({ number, data, front, back}) => {
   return (
     manualSkinnedMesh &&
     <group ref={ref}>
-      <primitive object={manualSkinnedMesh} ref={skinnedMeshRef} />
+      <primitive 
+        object={manualSkinnedMesh} 
+        ref={skinnedMeshRef} 
+        position-z={
+          -number * PAGE_THICKNESS + 
+        }
+        />
     </group>
   );
 };
@@ -161,7 +169,7 @@ const Book: React.FC = () => {
       <group>
         {
           [...pages].map((pageD, index) => (
-            <Page key={index} number={index} front={pageD.front} back={pageD.back} />
+            <Page key={index} number={index} front={pageD.front}  back={pageD.back} page={pageD.page} />
           )) 
 
         }
