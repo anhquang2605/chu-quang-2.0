@@ -62,14 +62,14 @@ type PageProps = {
 const Page: React.FC<PageProps> = ({ number, data, front, back}) => {
   //tried moving textures to the same folder, still have problem loading the pictures
   const [picture, picture2, pictureRoughness] = useTexture([
-    `textures/${front}.jpg`,
-    `textures/${back}.jpg`,
+    `/textures/${front}.jpg`,
+    `/textures/${back}.jpg`,
    ...(
     number === 0 || number === pages.length - 1 ?
-     [`textures/book-cover-roughness.jpg`] : []
+     [`/textures/book-cover-roughness.jpg`] : []
    )
   ])
-  picture.colorSpace = picture2.colorSpace
+  picture.colorSpace = picture2.colorSpace = THREE.SRGBColorSpace
   const ref = useRef<THREE.Mesh>(null);
   const skinnedMeshRef = useRef<THREE.SkinnedMesh>(null);
   const manualSkinnedMesh = useMemo(() => {
@@ -178,12 +178,12 @@ const BookLoader: React.FC = () => {
           <Book />
             <Environment preset="studio"></Environment>
           <directionalLight 
-              position={[2, 5, 2]} 
-              intensity={1.5} 
-              castShadow
-              shadow-mapSize-width={2048}
-              shadow-mapSize-height={2048}
-              shadow-bias={-0.0001}
+        position={[2, 5, 2]}
+        intensity={2.5}
+        castShadow
+        shadow-mapSize-width={2048}
+        shadow-mapSize-height={2048}
+        shadow-bias={-0.0001}
           />
            <mesh position-y={-1.5} rotation-x={-Math.PI / 2} receiveShadow>
             <planeGeometry args={[100, 100]} />
