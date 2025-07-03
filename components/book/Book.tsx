@@ -53,6 +53,11 @@ type PageProps = {
     new THREE.MeshStandardMaterial({ color: whiteColor}),
     new THREE.MeshStandardMaterial({ color: whiteColor}),
   ];
+  pages.forEach((page, index) => {
+    useTexture.preload(`textures/${page.front}.jpg`);
+    useTexture.preload(`textures/${page.back}.jpg`);
+    useTexture.preload(`textures/book-cover-roughness.jpg`);
+  })
 
 const Page: React.FC<PageProps> = ({ number, data, front, back}) => {
   //tried moving textures to the same folder, still have problem loading the pictures
