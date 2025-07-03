@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { pages } from './book-asset/pages';
-import { OrbitControls, useHelper, useTexture } from '@react-three/drei';
+import { Environment, OrbitControls, useHelper, useTexture } from '@react-three/drei';
 import { Orbit } from 'next/font/google';
 
 type PageProps = {
@@ -176,7 +176,7 @@ const BookLoader: React.FC = () => {
       <Canvas>
           <OrbitControls />
           <Book />
-          
+            <Environment preset="studio"></Environment>
           <directionalLight 
               position={[2, 5, 2]} 
               intensity={2.5} 
@@ -185,6 +185,10 @@ const BookLoader: React.FC = () => {
               shadow-mapSize-height={2048}
               shadow-bias={-0.0001}
           />
+           <mesh position-y={-1.5} rotation-x={-Math.PI / 2} receiveShadow>
+            <planeGeometry args={[100, 100]} />
+            <shadowMaterial transparent opacity={0.2} />
+          </mesh>
       </Canvas>
     </div>
   );
