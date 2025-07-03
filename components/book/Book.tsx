@@ -179,7 +179,7 @@ const BookLoader: React.FC = () => {
             <Environment preset="studio"></Environment>
           <directionalLight 
               position={[2, 5, 2]} 
-              intensity={2.5} 
+              intensity={1.5} 
               castShadow
               shadow-mapSize-width={2048}
               shadow-mapSize-height={2048}
