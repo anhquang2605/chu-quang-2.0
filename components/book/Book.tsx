@@ -7,11 +7,11 @@ import { Orbit } from 'next/font/google';
 
 type PageProps = {
   rotation?: number;
-  number?: number;
+  number: number;
   data?: any;
   front?: string;
   back?: string;
-  page?: string;
+  page: number;
 };
 
 //set up before page
@@ -60,7 +60,7 @@ type PageProps = {
     useTexture.preload(`textures/book-cover-roughness.jpg`);
   })
 
-const Page: React.FC<PageProps> = ({ number, data, front, back}) => {
+const Page: React.FC<PageProps> = ({ number, data, front, back, page,}) => {
   //tried moving textures to the same folder, still have problem loading the pictures
   const [picture, picture2, pictureRoughness] = useTexture([
     `/textures/${front}.jpg`,
@@ -156,7 +156,7 @@ const Page: React.FC<PageProps> = ({ number, data, front, back}) => {
         object={manualSkinnedMesh} 
         ref={skinnedMeshRef} 
         position-z={
-          -number * PAGE_THICKNESS + 
+          -number * PAGE_THICKNESS + page * PAGE_THICKNESS
         }
         />
     </group>
@@ -169,7 +169,7 @@ const Book: React.FC = () => {
       <group>
         {
           [...pages].map((pageD, index) => (
-            <Page key={index} number={index} front={pageD.front}  back={pageD.back} page={pageD.page} />
+            <Page key={index} number={index} front={pageD.front}  back={pageD.back} page={index} />
           )) 
 
         }
