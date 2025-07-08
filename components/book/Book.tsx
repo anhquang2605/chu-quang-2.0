@@ -142,7 +142,7 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
     }
 
     const bones = skinnedMeshRef.current.skeleton.bones;
-    bones[0].rotation.y = targetRotation;
+    bones[0].rotation.y = THREE.MathUtils.lerp(bones[0].rotation.y, targetRotation, 0.1); // Smoothly interpolate the rotation of the first bone
 
     // Rotate the page around the y-axis, simulating a page turn
     // Limit the rotation to 90 degrees (PI/2 radians)
@@ -163,7 +163,7 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
     
   return (
     manualSkinnedMesh &&
-    <group ref={ref}>
+    <group ref={ref} rotation-x={-Math.PI / 2}>
       <primitive 
         object={manualSkinnedMesh} 
         ref={skinnedMeshRef} 
