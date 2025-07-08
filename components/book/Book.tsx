@@ -5,6 +5,7 @@ import { pageAtom, pages } from './book-asset/pages';
 import { Environment, OrbitControls, useTexture } from '@react-three/drei';
 import { degToRad } from 'three/src/math/MathUtils.js';
 import { atom , useAtom } from 'jotai';
+import { easing } from 'maath';
 type PageProps = {
   rotation?: number;
   number: number;
@@ -17,7 +18,7 @@ type PageProps = {
 };
 
 //set up before page
-const EASING_FACTOR = 0.1; // Adjust this value to control the smoothness of the rotation
+const EASING_FACTOR = 0.5; // Adjust this value to control the smoothness of the rotation
   const PAGE_WIDTH = 1;
   const PAGE_HEIGHT = 1.5;
   const PAGE_THICKNESS = 0.01;
@@ -132,7 +133,7 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
 
  
   //Make the page turn one by one using the useFrame hook, the book has skeleton animation, so we can use the skinned mesh to animate the page turning
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     if (!manualSkinnedMesh) return;
     if (!skinnedMeshRef.current) return;
 
@@ -142,7 +143,13 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
     }
 
     const bones = skinnedMeshRef.current.skeleton.bones;
-    bones[0].rotation.y = THREE.MathUtils.lerp(bones[0].rotation.y, targetRotation, EASING_FACTOR); // Smoothly interpolate the rotation of the first bone
+    bones[0].rotation.y = easing.dampAngle(
+      bones[0].rotation, 
+      'y', 
+      targetRotation, 
+      EASING_FACTOR,
+      delta
+    ); // Smoothly interpolate the rotation of the first bone
 
     // Rotate the page around the y-axis, simulating a page turn
     // Limit the rotation to 90 degrees (PI/2 radians)
