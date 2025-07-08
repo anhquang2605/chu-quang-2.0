@@ -176,12 +176,16 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
 };
 
 const Book: React.FC = () => {
+  
   return (
     <group>
       <group>
         {
           [...pages].map((pageD, index) => (
-            <Page key={index} number={index} front={pageD.front}  back={pageD.back} page={index} />
+            <Page key={index} number={index} front={pageD.front} bookClosed={
+              index === 0 || index === pages.length - 1
+ 
+            }  back={pageD.back} page={index} />
           )) 
 
         }
