@@ -1,3 +1,4 @@
+import { atom } from "jotai";
 const pictures = [
   "DSC00680",
   "DSC00933",
@@ -16,6 +17,7 @@ const pictures = [
   "DSC02064",
   "DSC02069",
 ];
+export const pageAtom = atom(0);
 export const pages = [
   {
     front: "book-cover",
