@@ -176,7 +176,7 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
 };
 
 const Book: React.FC = () => {
-  
+  const [page] = useAtom(pageAtom);
   return (
     <group>
       <group>
