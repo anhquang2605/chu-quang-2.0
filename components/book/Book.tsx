@@ -143,7 +143,8 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
     }
 
     const bones = skinnedMeshRef.current.skeleton.bones;
-    bones[0].rotation.y = easing.dampAngle(
+    //dampAngle is a function from maath library that smoothly interpolates the rotation of the bones
+    easing.dampAngle(
       bones[0].rotation, 
       'y', 
       targetRotation, 
@@ -151,21 +152,6 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
       delta
     ); // Smoothly interpolate the rotation of the first bone
 
-    // Rotate the page around the y-axis, simulating a page turn
-    // Limit the rotation to 90 degrees (PI/2 radians)
-    //animate the page turning with bones and skeleton
-    /* if (skinnedMeshRef.current.skeleton) {
-      const bones = skinnedMeshRef.current.skeleton.bones;
-      for (let i = 0; i < bones.length; i++) {
-        bones[i].rotation.y += delta;
-        bones[i].rotation.y = Math.min(bones[i].rotation.y, Math.PI / 2); // Limit the rotation to 90 degrees
-        //page only turns and fold like snapping
-      }
-    }
-    if (skinnedMeshRef.current) {
-      skinnedMeshRef.current.rotation.y += delta;
-      skinnedMeshRef.current.rotation.y = Math.min(skinnedMeshRef.current.rotation.y, Math.PI / 2); // Limit the rotation to 90 degrees
-    } */
   });
     
   return (
