@@ -17,7 +17,7 @@ type PageProps = {
 };
 
 //set up before page
-const LERP_FACTOR = 0.1; // Adjust this value to control the smoothness of the rotation
+const EASING_FACTOR = 0.1; // Adjust this value to control the smoothness of the rotation
   const PAGE_WIDTH = 1;
   const PAGE_HEIGHT = 1.5;
   const PAGE_THICKNESS = 0.01;
@@ -142,7 +142,7 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
     }
 
     const bones = skinnedMeshRef.current.skeleton.bones;
-    bones[0].rotation.y = THREE.MathUtils.lerp(bones[0].rotation.y, targetRotation, LERP_FACTOR); // Smoothly interpolate the rotation of the first bone
+    bones[0].rotation.y = THREE.MathUtils.lerp(bones[0].rotation.y, targetRotation, EASING_FACTOR); // Smoothly interpolate the rotation of the first bone
 
     // Rotate the page around the y-axis, simulating a page turn
     // Limit the rotation to 90 degrees (PI/2 radians)
