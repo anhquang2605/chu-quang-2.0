@@ -136,7 +136,9 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
     if (!skinnedMeshRef.current) return;
 
     let targetRotation = opened ? -Math.PI / 2 : Math.PI / 2  ; // If the book is opened, rotate to 90 degrees, otherwise reset to 0
-    targetRotation += degToRad(number * 0.8);
+    if(!bookClosed){
+      targetRotation += degToRad(number * 0.8);
+    }
 
     const bones = skinnedMeshRef.current.skeleton.bones;
     bones[0].rotation.y = targetRotation;
