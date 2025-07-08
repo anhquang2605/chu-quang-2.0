@@ -134,6 +134,8 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page,}) => {
     if (!skinnedMeshRef.current) return;
 
     let targetRotation = opened ? Math.PI / 2 : 0; // If the book is opened, rotate to 90 degrees, otherwise reset to 0
+
+    const bones = skinnedMeshRef
     // Rotate the page around the y-axis, simulating a page turn
     // Limit the rotation to 90 degrees (PI/2 radians)
     //animate the page turning with bones and skeleton
