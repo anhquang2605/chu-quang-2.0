@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import { pages } from './book-asset/pages';
 import { Environment, OrbitControls, useHelper, useTexture } from '@react-three/drei';
 import { Orbit } from 'next/font/google';
+import { degToRad } from 'three/src/math/MathUtils.js';
 
 type PageProps = {
   rotation?: number;
@@ -134,10 +135,11 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
     if (!manualSkinnedMesh) return;
     if (!skinnedMeshRef.current) return;
 
-    let targetRotation = opened ? Math.PI / 2 : 0; // If the book is opened, rotate to 90 degrees, otherwise reset to 0
+    let targetRotation = opened ? -Math.PI / 2 : Math.PI / 2  ; // If the book is opened, rotate to 90 degrees, otherwise reset to 0
+    targetRotation += degToRad(number * 0.8);
 
     const bones = skinnedMeshRef.current.skeleton.bones;
-    
+    bones[0].rotation.y = targetRotation;
 
     // Rotate the page around the y-axis, simulating a page turn
     // Limit the rotation to 90 degrees (PI/2 radians)
