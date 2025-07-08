@@ -176,7 +176,30 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
 };
 
 const Book: React.FC = () => {
-  const [page] = useAtom(pageAtom);
+  const [page, setPage] = useAtom(pageAtom);
+  const timeerRef = useRef<NodeJS.Timeout | null>(null);
+  const turnThePage = () => {
+      setPage((prevPage) => {
+        if (prevPage < pages.length - 1) {
+          return prevPage + 1;
+        } else {
+          return 0; // Reset to the first page if at the end
+        }
+      });
+  }
+  
+  useEffect(() => {
+    timeerRef.current = setInterval(() => {
+      turnThePage();
+    }, 3000); // Change page every 3 seconds
+
+    return () => {
+      if (timeerRef.current) {
+        clearInterval(timeerRef.current);
+        timeerRef.current = null;
+      }
+    }
+  },[])
   return (
     <group>
       <group>
