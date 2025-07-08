@@ -2,8 +2,7 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { pageAtom, pages } from './book-asset/pages';
-import { Environment, OrbitControls, useHelper, useTexture } from '@react-three/drei';
-import { Orbit } from 'next/font/google';
+import { Environment, OrbitControls, useTexture } from '@react-three/drei';
 import { degToRad } from 'three/src/math/MathUtils.js';
 import { atom , useAtom } from 'jotai';
 type PageProps = {
