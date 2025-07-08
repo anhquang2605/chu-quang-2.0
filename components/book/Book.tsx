@@ -12,6 +12,7 @@ type PageProps = {
   front?: string;
   back?: string;
   page: number;
+  opened?: boolean;
 };
 
 //set up before page
@@ -60,7 +61,7 @@ type PageProps = {
     useTexture.preload(`textures/book-cover-roughness.jpg`);
   })
 
-const Page: React.FC<PageProps> = ({ number, data, front, back, page,}) => {
+const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = false}) => {
   //tried moving textures to the same folder, still have problem loading the pictures
   const [picture, picture2, pictureRoughness] = useTexture([
     `/textures/${front}.jpg`,
