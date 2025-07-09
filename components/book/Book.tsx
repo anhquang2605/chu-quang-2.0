@@ -32,6 +32,13 @@ const EASING_FACTOR = 0.5; // Adjust this value to control the smoothness of the
     PAGE_SEGMENT_COUNT,
     PAGE_SEGMENT_HEIGHT
   );
+  const coverPageGeometry = new THREE.BoxGeometry(
+    PAGE_WIDTH,
+    PAGE_HEIGHT,
+    PAGE_THICKNESS * 10, // Double thickness for the cover
+    PAGE_SEGMENT_COUNT,
+    PAGE_SEGMENT_HEIGHT
+  )
   
   pageGeometry.translate( PAGE_WIDTH / 2, 0, 0);
 
@@ -155,8 +162,8 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
   });
     
   return (
-    manualSkinnedMesh &&
-    <group ref={ref} rotation-x={-Math.PI / 2}>
+
+    <group ref={ref} >
       <primitive 
         object={manualSkinnedMesh} 
         ref={skinnedMeshRef} 
@@ -194,7 +201,7 @@ const Book: React.FC = () => {
   }
   
   useEffect(() => {
-    animatePage();
+    //animatePage();
   },[])
   return (
     <group>
