@@ -58,6 +58,8 @@ const EASING_FACTOR = 0.5; // Adjust this value to control the smoothness of the
   }
   pageGeometry.setAttribute('skinIndex', new THREE.Uint16BufferAttribute(skinIndices, 4));
   pageGeometry.setAttribute('skinWeight', new THREE.Float32BufferAttribute(skinWeights, 4));
+  coverPageGeometry.setAttribute('skinIndex', new THREE.Uint16BufferAttribute(skinIndices, 4));
+  coverPageGeometry.setAttribute('skinWeight', new THREE.Float32BufferAttribute(skinWeights, 4));
   const whiteColor = new THREE.Color('white');
   const pageMaterials = [
     new THREE.MeshStandardMaterial({ color: whiteColor}),
@@ -129,7 +131,11 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
          )
       })
      ];
-    const mesh: THREE.SkinnedMesh = new THREE.SkinnedMesh(pageGeometry, materials);
+     
+    let mesh: THREE.SkinnedMesh = new THREE.SkinnedMesh(pageGeometry, materials);
+    if( number === 0 || number === pages.length - 1) {
+      mesh = new THREE.SkinnedMesh(coverPageGeometry, materials);
+    }
     mesh.castShadow = true;
     mesh.receiveShadow = true;
     mesh.frustumCulled = false; // Disable frustum culling for the mesh, what is this? https://threejs.org/docs/#api/en/core/Object3D.frustumCulled
