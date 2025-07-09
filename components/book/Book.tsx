@@ -198,10 +198,19 @@ const Book: React.FC = () => {
       <group>
         {
           [...pages].map((pageD, index) => (
-            <Page key={index} page={page} opened={page > index}  number={index} front={pageD.front} bookClosed={
-              page === 0 || page === pages.length - 1
- 
-            }  back={pageD.back} />
+            <Page 
+              position-x={
+                index * 0.15
+              }
+              key={index} 
+              page={page} 
+              opened={page > index}  
+              number={index} 
+              front={pageD.front} 
+              bookClosed={
+                page === 0 || page === pages.length - 1
+              }  
+              back={pageD.back} />
           )) 
 
         }
