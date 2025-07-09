@@ -180,8 +180,7 @@ const Book: React.FC = () => {
         }
       });
   }
-  
-  useEffect(() => {
+  const animatePage = () => {
     timeerRef.current = setInterval(() => {
       turnThePage();
     }, 3000); // Change page every 3 seconds
@@ -192,6 +191,10 @@ const Book: React.FC = () => {
         timeerRef.current = null;
       }
     }
+  }
+  
+  useEffect(() => {
+    animatePage();
   },[])
   return (
     <group>
