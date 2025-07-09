@@ -166,15 +166,15 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
     ); // Smoothly interpolate the rotation of the first bone
 
   });
-    
+  const pageDepth = number === 0 || number === pages.length - 1 ? PAGE_THICKNESS * 10 : PAGE_THICKNESS;
   return (
-
+     
     <group ref={ref} >
       <primitive 
         object={manualSkinnedMesh} 
         ref={skinnedMeshRef} 
         position-z={
-          -number * PAGE_THICKNESS + page * PAGE_THICKNESS
+          -number * pageDepth + page * pageDepth
         }
         />
     </group>
