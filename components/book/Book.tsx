@@ -215,7 +215,7 @@ const Book: React.FC = () => {
         {
           [...pages].map((pageD, index) => (
             <Page 
-
+              position-y={index * 0.01}
               key={index} 
               page={page} 
               opened={page > index}  
