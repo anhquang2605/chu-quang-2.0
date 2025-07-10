@@ -172,6 +172,13 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
       const outsideCurveIntensity = i >= 8 ? Math.cos(i * 0.3 + 0.09) : 0;
       let rotationAngle = insideCurveStrength * insideCurveIntensity * targetRotation - outsideCurveStrength * outsideCurveIntensity * targetRotation;
       if (!target) continue; // Skip if the target is not defined
+      if( bookClosed ) {
+        if(i === 0) {
+          rotationAngle = targetRotation;
+        } else {
+          rotationAngle = 0;
+        }
+      }
       //dampAngle is a function from maath library that smoothly interpolates the rotation of the bones
       easing.dampAngle(
         target.rotation, 
