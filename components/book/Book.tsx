@@ -41,7 +41,7 @@ const EASING_FACTOR = 0.5; // Adjust this value to control the smoothness of the
   )
   
   pageGeometry.translate( PAGE_WIDTH / 2, 0, 0);
-
+  coverPageGeometry.translate( PAGE_WIDTH / 2, 0, 0);
   const position = pageGeometry.attributes.position;
   const vertex = new THREE.Vector3();
   const skinIndices = []; //bones indices
