@@ -161,15 +161,18 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
     }
 
     const bones = skinnedMeshRef.current.skeleton.bones;
-    //dampAngle is a function from maath library that smoothly interpolates the rotation of the bones
-    easing.dampAngle(
-      bones[0].rotation, 
-      'y', 
-      targetRotation, 
-      EASING_FACTOR,
-      delta
-    ); // Smoothly interpolate the rotation of the first bone
-
+    for (let i = 0; i < bones.length; i++) {
+      const target = i === 0 ? ref.current : bones[i];
+    
+      //dampAngle is a function from maath library that smoothly interpolates the rotation of the bones
+      easing.dampAngle(
+        bones[0].rotation, 
+        'y', 
+        targetRotation, 
+        EASING_FACTOR,
+        delta
+      ); // Smoothly interpolate the rotation of the first bone
+    }
   });
   //const pageDepth = number === 0 || number === pages.length - 1 ? PAGE_THICKNESS * 10 : PAGE_THICKNESS;
   const pageDepth = PAGE_THICKNESS;
