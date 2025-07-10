@@ -18,7 +18,10 @@ type PageProps = {
 };
 
 //set up before page
-const EASING_FACTOR = 0.5; // Adjust this value to control the smoothness of the rotation
+  //page turning animation
+  const insideCurveStrength = 0.18; // Adjust this value to control the strength
+  const EASING_FACTOR = 0.5; // Adjust this value to control the smoothness of the rotation
+  //page geometry
   const PAGE_WIDTH = 1.28;
   const PAGE_HEIGHT = 1.71;
   const PAGE_THICKNESS = 0.003;
@@ -163,12 +166,14 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
     const bones = skinnedMeshRef.current.skeleton.bones;
     for (let i = 0; i < bones.length; i++) {
       const target = i === 0 ? ref.current : bones[i];
-    
+      const insideCurveIntensity = i < 8 ? Math.sin(i * 0.2 + 0.25) : 0;
+      let rotationAngle = insideCurveStrength * insideCurveIntensity * targetRotation;
+      if (!target) continue; // Skip if the target is not defined
       //dampAngle is a function from maath library that smoothly interpolates the rotation of the bones
       easing.dampAngle(
-        bones[0].rotation, 
+        target.rotation, 
         'y', 
-        targetRotation, 
+        rotationAngle, 
         EASING_FACTOR,
         delta
       ); // Smoothly interpolate the rotation of the first bone
