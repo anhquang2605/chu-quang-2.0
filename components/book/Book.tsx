@@ -19,8 +19,8 @@ type PageProps = {
 
 //set up before page
 const EASING_FACTOR = 0.5; // Adjust this value to control the smoothness of the rotation
-  const PAGE_WIDTH = 1;
-  const PAGE_HEIGHT = 1.5;
+  const PAGE_WIDTH = 1.28;
+  const PAGE_HEIGHT = 1.71;
   const PAGE_THICKNESS = 0.003;
   const PAGE_SEGMENT_COUNT = 30;
   const PAGE_SEGMENT_HEIGHT = 2;
@@ -39,13 +39,15 @@ const EASING_FACTOR = 0.5; // Adjust this value to control the smoothness of the
     PAGE_SEGMENT_COUNT,
     PAGE_SEGMENT_HEIGHT
   )
-  
+  //translate the geometry to the center of the page
   pageGeometry.translate( PAGE_WIDTH / 2, 0, 0);
   coverPageGeometry.translate( PAGE_WIDTH / 2, 0, 0);
   const position = pageGeometry.attributes.position;
   const vertex = new THREE.Vector3();
   const skinIndices = []; //bones indices
   const skinWeights = [];
+//bones weights
+
   for (let i = 0; i < position.count; i++) {
     vertex.fromBufferAttribute(position, i);
     const x = vertex.x;
@@ -60,6 +62,8 @@ const EASING_FACTOR = 0.5; // Adjust this value to control the smoothness of the
   pageGeometry.setAttribute('skinWeight', new THREE.Float32BufferAttribute(skinWeights, 4));
   coverPageGeometry.setAttribute('skinIndex', new THREE.Uint16BufferAttribute(skinIndices, 4));
   coverPageGeometry.setAttribute('skinWeight', new THREE.Float32BufferAttribute(skinWeights, 4));
+  // Set up materials for the pages
+  //using white color for the pages, and black for the back of the book
   const whiteColor = new THREE.Color('white');
   const pageMaterials = [
     new THREE.MeshStandardMaterial({ color: whiteColor}),
@@ -103,6 +107,8 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
     }
     
     const skeleton = new THREE.Skeleton(bones);
+    // Create a skinned mesh with the page geometry and the skeleton
+    // Use the pageGeometry and coverPageGeometry based on the page number
     const materials = [...pageMaterials,
       new THREE.MeshStandardMaterial({
         color: whiteColor,
@@ -133,9 +139,9 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
      ];
      
     let mesh: THREE.SkinnedMesh = new THREE.SkinnedMesh(pageGeometry, materials);
-    if( number === 0 || number === pages.length - 1) {
+/*     if( number === 0 || number === pages.length - 1) {
       mesh = new THREE.SkinnedMesh(coverPageGeometry, materials);
-    }
+    } */
     mesh.castShadow = true;
     mesh.receiveShadow = true;
     mesh.frustumCulled = false; // Disable frustum culling for the mesh, what is this? https://threejs.org/docs/#api/en/core/Object3D.frustumCulled
@@ -147,7 +153,6 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
  
   //Make the page turn one by one using the useFrame hook, the book has skeleton animation, so we can use the skinned mesh to animate the page turning
   useFrame((_, delta) => {
-    if (!manualSkinnedMesh) return;
     if (!skinnedMeshRef.current) return;
 
     let targetRotation = opened ? -Math.PI / 2 : Math.PI / 2  ; // If the book is opened, rotate to 90 degrees, otherwise reset to 0
