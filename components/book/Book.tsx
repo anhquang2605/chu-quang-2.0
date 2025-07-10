@@ -216,12 +216,10 @@ const Book: React.FC = () => {
     animatePage();
   },[])
   return (
-    <group>
       <group>
         {
           [...pages].map((pageD, index) => (
             <Page 
-              position-y={index * 0.01}
               key={index} 
               page={page} 
               opened={page > index}  
@@ -235,7 +233,6 @@ const Book: React.FC = () => {
 
         }
       </group>
-    </group>
   );
 };
 
