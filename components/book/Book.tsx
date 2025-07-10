@@ -207,7 +207,7 @@ const Book: React.FC = () => {
   }
   
   useEffect(() => {
-    //animatePage();
+    animatePage();
   },[])
   return (
     <group>
