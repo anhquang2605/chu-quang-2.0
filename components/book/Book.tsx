@@ -124,7 +124,7 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
             roughnessMap: pictureRoughness,
             } 
           : {
-              roughness: 0.1,
+              roughness: 1,
             }
          )
       }),
