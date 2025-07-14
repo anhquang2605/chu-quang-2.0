@@ -166,8 +166,8 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
       turnedAt.current = + new Date();//the plus sign here is to get the timestamp value
       lastOpened.current = opened;
     }
-    const dateDifference = new Date() - turnedAt.current;
-    const turningTime = Math.min(400, );
+    const dateDifference = new Date().getTime() - turnedAt.current;
+    const turningTime = Math.min(400, dateDifference) / 400;;
 
     let targetRotation = opened ? -Math.PI / 2 : Math.PI / 2  ; // If the book is opened, rotate to 90 degrees, otherwise reset to 0
     if(!bookClosed){
