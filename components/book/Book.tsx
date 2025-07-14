@@ -180,7 +180,10 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
       const insideCurveIntensity = i < 8 ? Math.sin(i * 0.2 + 0.25) : 0;
       const outsideCurveIntensity = i >= 8 ? Math.cos(i * 0.3 + 0.09) : 0;
       const turningIntensity = Math.sin(i * Math.PI * (1 / bones.length)) * turningTime;
-      let rotationAngle = insideCurveStrength * insideCurveIntensity * targetRotation - outsideCurveStrength * outsideCurveIntensity * targetRotation;
+      let rotationAngle = insideCurveStrength * insideCurveIntensity * targetRotation - outsideCurveStrength * outsideCurveIntensity * targetRotation +
+      turningCurveStrength * turningIntensity * targetRotation
+      ;
+
       if (!target) continue; // Skip if the target is not defined
       if( bookClosed ) {
         if(i === 0) {
