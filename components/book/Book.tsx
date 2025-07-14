@@ -95,6 +95,8 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
   //to set the color space of the textures to sRGB, changing them from  too bright to normal colorating
   picture.colorSpace = picture2.colorSpace = THREE.SRGBColorSpace
   const ref = useRef<THREE.Mesh>(null);
+  const turnedAt = useRef(0);
+  const lastOpened = useRef(opened);
   const skinnedMeshRef = useRef<THREE.SkinnedMesh>(null);
   const manualSkinnedMesh = useMemo(() => {
     const bones = [];
