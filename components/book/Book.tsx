@@ -95,7 +95,7 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
   //to set the color space of the textures to sRGB, changing them from  too bright to normal colorating
   picture.colorSpace = picture2.colorSpace = THREE.SRGBColorSpace
   const ref = useRef<THREE.Mesh>(null);
-  const turnedAt = useRef(0);
+  const turnedAt = useRef<number>(0);
   const lastOpened = useRef(opened);
   const skinnedMeshRef = useRef<THREE.SkinnedMesh>(null);
   const manualSkinnedMesh = useMemo(() => {
@@ -163,9 +163,11 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
     if (!skinnedMeshRef.current) return;
 
     if(lastOpened.current !== opened) {
-      turnedAt.current = + new Date();
+      turnedAt.current = + new Date();//the plus sign here is to get the timestamp value
       lastOpened.current = opened;
     }
+    const dateDifference = new Date() - turnedAt.current;
+    const turningTime = Math.min(400, );
 
     let targetRotation = opened ? -Math.PI / 2 : Math.PI / 2  ; // If the book is opened, rotate to 90 degrees, otherwise reset to 0
     if(!bookClosed){
