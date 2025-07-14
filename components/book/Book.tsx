@@ -162,6 +162,11 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
   useFrame((_, delta) => {
     if (!skinnedMeshRef.current) return;
 
+    if(lastOpened.current !== opened) {
+      turnedAt.current = + new Date();
+      lastOpened.current = opened;
+    }
+
     let targetRotation = opened ? -Math.PI / 2 : Math.PI / 2  ; // If the book is opened, rotate to 90 degrees, otherwise reset to 0
     if(!bookClosed){
       targetRotation += degToRad(number * 0.8);
