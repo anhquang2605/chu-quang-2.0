@@ -183,7 +183,7 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
       let rotationAngle = insideCurveStrength * insideCurveIntensity * targetRotation - outsideCurveStrength * outsideCurveIntensity * targetRotation +
       turningCurveStrength * turningIntensity * targetRotation
       ;
-
+      let foldRotationAngle = degToRad(Math.sign(targetRotation) * 2);
       if (!target) continue; // Skip if the target is not defined
       if( bookClosed ) {
         if(i === 0) {
