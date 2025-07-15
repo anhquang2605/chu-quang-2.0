@@ -188,6 +188,7 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
       if( bookClosed ) {
         if(i === 0) {
           rotationAngle = targetRotation;
+          foldRotationAngle = 0;
         } else {
           rotationAngle = 0;
         }
