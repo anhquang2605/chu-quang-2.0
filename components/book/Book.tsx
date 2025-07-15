@@ -21,7 +21,7 @@ type PageProps = {
   //page turning animation
   const insideCurveStrength = 0.18; // Adjust this value to control the strength
   const outsideCurveStrength = 0.05;
-  const turningCurveStrength = 0.09; // Adjust this value to control the strength of the turning curve
+  const turningCurveStrength = 0.02; // Adjust this value to control the strength of the turning curve
   const EASING_FACTOR = 0.5; // Adjust this value to control the smoothness of the rotation
   const EASING_FOLD_FACTOR = 0.3; // Adjust this value to control the smoothness of the fold rotation
   //page geometry
