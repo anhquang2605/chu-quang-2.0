@@ -21,7 +21,7 @@ type PageProps = {
   //page turning animation
   const insideCurveStrength = 0.18; // Adjust this value to control the strength
   const outsideCurveStrength = 0.05;
-  const turningCurveStrength = 0.02; // Adjust this value to control the strength of the turning curve
+  const turningCurveStrength = 0.005; // Adjust this value to control the strength of the turning curve
   const EASING_FACTOR = 0.5; // Adjust this value to control the smoothness of the rotation
   const EASING_FOLD_FACTOR = 0.3; // Adjust this value to control the smoothness of the fold rotation
   //page geometry
@@ -203,14 +203,14 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
         EASING_FACTOR,
         delta
       ); // Smoothly interpolate the rotation of the first bone
-/*       const foldIntensity = i > 8 ? Math.sin(i * Math.PI * ( 1/ bones.length) - 0.5) * turningTime : 0;
+      const foldIntensity = i > 8 ? Math.sin(i * Math.PI * ( 1/ bones.length) - 0.5) * turningTime : 0;
       easing.dampAngle(
         target.rotation,
         "x",
         foldRotationAngle * foldIntensity,
         EASING_FOLD_FACTOR,
         delta
-      ) */
+      )
     }
     
   });
