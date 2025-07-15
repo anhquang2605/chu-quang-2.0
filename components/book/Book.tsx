@@ -203,6 +203,13 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
         delta
       ); // Smoothly interpolate the rotation of the first bone
       const foldIntensity = i > 8 ? Math.sin(i * Math.PI * ( 1/ bones.length) - 0.5) * turningTime : 0;
+      easing.dampAngle(
+        target.rotation,
+        "x",
+        foldRotationAngle * foldIntensity,
+        EASING_FOLD_FACTOR,
+        delta
+      )
     }
     
   });
