@@ -168,9 +168,10 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
       lastOpened.current = opened;
     }
     const newDate = + new Date();
-    const dateDifference = newDate - turnedAt.current;
+    const dateDifference = new Date().getTime() - turnedAt.current;
     let turningTime = Math.min(400, dateDifference) / 400;;
-
+     turningTime = Math.sin(turningTime * Math.PI);
+     
     let targetRotation = opened ? -Math.PI / 2 : Math.PI / 2  ; // If the book is opened, rotate to 90 degrees, otherwise reset to 0
     if(!bookClosed){
       targetRotation += degToRad(number * 0.8);
@@ -182,8 +183,8 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
       const insideCurveIntensity = i < 8 ? Math.sin(i * 0.2 + 0.25) : 0;
       const outsideCurveIntensity = i >= 8 ? Math.cos(i * 0.3 + 0.09) : 0;
       const turningIntensity = Math.sin(i * Math.PI * (1 / bones.length)) * turningTime;
-      let rotationAngle = insideCurveStrength * insideCurveIntensity * targetRotation - outsideCurveStrength * outsideCurveIntensity * targetRotation  /* +
-      turningCurveStrength * turningIntensity * targetRotation */ 
+      let rotationAngle = insideCurveStrength * insideCurveIntensity * targetRotation - outsideCurveStrength * outsideCurveIntensity * targetRotation  +
+      turningCurveStrength * turningIntensity * targetRotation 
       ;
       let foldRotationAngle = degToRad(Math.sign(targetRotation) * 2);//the sign function returns -1 or 1 depending on the sign of the targetRotation
       if (!target) continue; // Skip if the target is not defined
@@ -203,7 +204,7 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
         EASING_FACTOR,
         delta
       ); // Smoothly interpolate the rotation of the first bone
-    /*   const foldIntensity = i > 8 ? Math.sin(i * Math.PI * ( 1/ bones.length) - 0.5) * turningTime : 0;
+/*       const foldIntensity = i > 8 ? Math.sin(i * Math.PI * ( 1/ bones.length) - 0.5) * turningTime : 0;
       easing.dampAngle(
         target.rotation,
         "x",
