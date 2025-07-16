@@ -21,7 +21,7 @@ type PageProps = {
   //page turning animation
   const insideCurveStrength = 0.18; // Adjust this value to control the strength
   const outsideCurveStrength = 0.05;
-  const turningCurveStrength = 0.005; // Adjust this value to control the strength of the turning curve
+  const turningCurveStrength = 0.09; // Adjust this value to control the strength of the turning curve
   const EASING_FACTOR = 0.5; // Adjust this value to control the smoothness of the rotation
   const EASING_FOLD_FACTOR = 0.3; // Adjust this value to control the smoothness of the fold rotation
   //page geometry
@@ -185,7 +185,7 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
       let rotationAngle = insideCurveStrength * insideCurveIntensity * targetRotation - outsideCurveStrength * outsideCurveIntensity * targetRotation  +
       turningCurveStrength * turningIntensity * targetRotation 
       ;
-      let foldRotationAngle = degToRad(Math.sign(targetRotation) * 2);
+      let foldRotationAngle = degToRad(Math.sign(targetRotation) * 2);//the sign function returns -1 or 1 depending on the sign of the targetRotation
       if (!target) continue; // Skip if the target is not defined
       if( bookClosed ) {
         if(i === 0) {
