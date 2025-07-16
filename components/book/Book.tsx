@@ -189,7 +189,19 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
     if(!bookClosed){
       targetRotation += degToRad(number * 0.8);
     }
-
+     if (isCover) {
+      // For covers, simple rotation without bending
+      if (ref.current) {
+         easing.dampAngle(
+          ref.current.rotation,
+          'y',
+          targetRotation,
+          0.3, // Slower easing for more solid feel
+          delta
+        );
+      }
+      return;
+    }
     const bones = skinnedMeshRef.current.skeleton.bones;
     for (let i = 0; i < bones.length; i++) {
       const target = i === 0 ? ref.current : bones[i];
