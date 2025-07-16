@@ -15,6 +15,7 @@ type PageProps = {
   page: number;
   opened?: boolean;
   bookClosed?: boolean;
+  isCover?: boolean;
 };
 
 //set up before page
@@ -84,6 +85,7 @@ type PageProps = {
   })
 
 const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = false, bookClosed = false}) => {
+  const isCover = number === 0 || number === pages.length - 1;
   //tried moving textures to the same folder, still have problem loading the pictures
   const [picture, picture2, pictureRoughness] = useTexture([
     `/textures/${front}.jpg`,
@@ -274,6 +276,7 @@ const Book: React.FC = () => {
                 page === 0 || page === pages.length - 1
               }  
               back={pageD.back} />
+              
           )) 
 
         }
