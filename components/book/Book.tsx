@@ -78,6 +78,9 @@ type PageProps = {
     new THREE.MeshStandardMaterial({ color: whiteColor}),
     new THREE.MeshStandardMaterial({ color: whiteColor}),
   ];
+  const coverMaterial = [
+    new THREE.MeshStandardMaterial({ color: whiteColor}),
+  ]
   pages.forEach((page, index) => {
     useTexture.preload(`textures/${page.front}.jpg`);
     useTexture.preload(`textures/${page.back}.jpg`);
@@ -102,6 +105,14 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
   const lastOpened = useRef(opened);
   const skinnedMeshRef = useRef<THREE.SkinnedMesh>(null);
   const manualSkinnedMesh = useMemo(() => {
+    //COVER PAGE
+    if (isCover) {
+      const coverMesh = new THREE.Mesh(coverPageGeometry, coverMaterial);
+      coverMesh.castShadow = true;
+      coverMesh.receiveShadow = true;
+      return coverMesh;
+    }
+    //REGULAR PAGE
     const bones = [];
     for (let i = 0; i <= PAGE_SEGMENT_COUNT; i++) {
       const bone = new THREE.Bone();
@@ -170,7 +181,7 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
       lastOpened.current = opened;
     }
     const newDate = + new Date();
-    const dateDifference = new Date().getTime() - turnedAt.current;
+    const dateDifference = newDate - turnedAt.current;
     let turningTime = Math.min(400, dateDifference) / 400;;
      turningTime = Math.sin(turningTime * Math.PI);
 
