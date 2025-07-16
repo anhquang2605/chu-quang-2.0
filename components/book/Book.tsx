@@ -19,8 +19,8 @@ type PageProps = {
 
 //set up before page
   //page turning animation
-  const insideCurveStrength = 0.18; // Adjust this value to control the strength
-  const outsideCurveStrength = 0.05;
+  const insideCurveStrength = 0.16; // Adjust this value to control the strength
+  const outsideCurveStrength = 0.03;
   const turningCurveStrength = 0.09; // Adjust this value to control the strength of the turning curve
   const EASING_FACTOR = 0.5; // Adjust this value to control the smoothness of the rotation
   const EASING_FOLD_FACTOR = 0.3; // Adjust this value to control the smoothness of the fold rotation
@@ -171,7 +171,7 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
     const dateDifference = new Date().getTime() - turnedAt.current;
     let turningTime = Math.min(400, dateDifference) / 400;;
      turningTime = Math.sin(turningTime * Math.PI);
-     
+
     let targetRotation = opened ? -Math.PI / 2 : Math.PI / 2  ; // If the book is opened, rotate to 90 degrees, otherwise reset to 0
     if(!bookClosed){
       targetRotation += degToRad(number * 0.8);
@@ -204,14 +204,14 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
         EASING_FACTOR,
         delta
       ); // Smoothly interpolate the rotation of the first bone
-/*       const foldIntensity = i > 8 ? Math.sin(i * Math.PI * ( 1/ bones.length) - 0.5) * turningTime : 0;
+      const foldIntensity = i > 8 ? Math.sin(i * Math.PI * ( 1/ bones.length) - 0.5) * turningTime : 0;
       easing.dampAngle(
         target.rotation,
         "x",
         foldRotationAngle * foldIntensity,
         EASING_FOLD_FACTOR,
         delta
-      ) */
+      )
     }
     
   });
