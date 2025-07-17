@@ -263,23 +263,38 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
 };
 
 const Book: React.FC = () => {
-    // Spine dimensions based on page dimensions
-  const SPINE_WIDTH = PAGE_THICKNESS * pages.length * 1.1; // Slightly thicker than all pages combined
+   // Spine parameters
+  const SPINE_RADIUS = PAGE_THICKNESS * pages.length * 0.5; // Curvature radius
   const SPINE_HEIGHT = PAGE_HEIGHT;
-  const SPINE_DEPTH = 0.02; // Small depth for the spine
+  const SPINE_WIDTH = Math.PI * SPINE_RADIUS * 0.5; // 90 degree arc length
+  const SPINE_SEGMENTS = 32; // Smoothness of the curve
 
-  // Create spine geometry and material
-  const spineGeometry = useMemo(() => new THREE.BoxGeometry(
-    SPINE_WIDTH, 
-    SPINE_HEIGHT, 
-    SPINE_DEPTH
-  ), []);
+  // Create curved spine geometry
+  const spineGeometry = useMemo(() => {
+    const geometry = new THREE.CylinderGeometry(
+      SPINE_RADIUS,
+      SPINE_RADIUS,
+      SPINE_HEIGHT,
+      SPINE_SEGMENTS,
+      1,
+      true, // Open ended
+      Math.PI * 0.5, // 90 degrees
+      Math.PI // Half circle (180 degrees)
+    );
+    
+    // Rotate and position the geometry
+    geometry.rotateY(Math.PI * 0.25); // Rotate 45 degrees
+    geometry.translate(0, 0, -SPINE_RADIUS * 0.7); // Position behind pages
+    return geometry;
+  }, []);
 
   const spineMaterial = useMemo(() => new THREE.MeshStandardMaterial({
-    color: '#222',
-    roughness: 0.8,
-    metalness: 0.1
+    color: '#1a1a1a',
+    roughness: 0.7,
+    metalness: 0.2,
+    side: THREE.DoubleSide
   }), []);
+
 
   const [page, setPage] = useAtom(pageAtom);
   const timeerRef = useRef<NodeJS.Timeout | null>(null);
@@ -303,13 +318,12 @@ const Book: React.FC = () => {
   return (
       <group>
         {/* SPINE */}
-        <mesh
-          geometry={spineGeometry}
-          material={spineMaterial}
-          position={[0, 0, -SPINE_DEPTH/2]} // Positioned slightly behind the pages
-          rotation={[0, 0, 0]}
-          castShadow
-        />
+         <mesh
+        geometry={spineGeometry}
+        material={spineMaterial}
+        position={[0, 0, 0]}
+        castShadow
+      />
         {/* PAGES */}
         {
           [...pages].map((pageD, index) => (
