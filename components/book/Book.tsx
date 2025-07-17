@@ -280,7 +280,7 @@ const Book: React.FC = () => {
     roughness: 0.8,
     metalness: 0.1
   }), []);
-  
+
   const [page, setPage] = useAtom(pageAtom);
   const timeerRef = useRef<NodeJS.Timeout | null>(null);
   const turnThePage = () => {
@@ -302,6 +302,15 @@ const Book: React.FC = () => {
   },[])
   return (
       <group>
+        {/* SPINE */}
+        <mesh
+          geometry={spineGeometry}
+          material={spineMaterial}
+          position={[0, 0, -SPINE_DEPTH/2]} // Positioned slightly behind the pages
+          rotation={[0, 0, 0]}
+          castShadow
+        />
+        {/* PAGES */}
         {
           [...pages].map((pageD, index) => (
             <Page 
