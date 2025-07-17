@@ -267,7 +267,7 @@ const Book: React.FC = () => {
   const SPINE_RADIUS = PAGE_THICKNESS * pages.length * 0.5;
   const SPINE_HEIGHT = PAGE_HEIGHT;
   const SPINE_SEGMENTS = 32;
-  const SPINE_ANGLE = Math.PI * 0.5; // 90 degrees of arc
+  const SPINE_ANGLE = Math.PI * .75; // 90 degrees of arc
 
   // Calculate spine position based on book thickness
   const totalBookThickness = PAGE_THICKNESS * pages.length;
@@ -282,13 +282,10 @@ const Book: React.FC = () => {
       SPINE_SEGMENTS,
       1,
       true, // Open ended
-      Math.PI * 0.5 - SPINE_ANGLE * 0.5, // Start angle
+      Math.PI *1.1 , // Start angle
       SPINE_ANGLE // Arc length
     );
     
-    // Rotate to stand upright and position correctly
-    geometry.rotateX(Math.PI * 0.5);
-    geometry.rotateY(Math.PI * 0.5);
     return geometry;
   }, []);
 
