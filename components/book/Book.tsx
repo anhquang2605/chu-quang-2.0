@@ -282,7 +282,7 @@ const Book: React.FC = () => {
       SPINE_SEGMENTS,
       1,
       true, // Open ended
-      Math.PI *1.1 , // Start angle
+      Math.PI *1.2 , // Start angle
       SPINE_ANGLE // Arc length
     );
     
