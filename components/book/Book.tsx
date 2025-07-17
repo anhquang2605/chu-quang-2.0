@@ -298,7 +298,6 @@ const Book: React.FC = () => {
 
 
   const [page, setPage] = useAtom(pageAtom);
-  const timeerRef = useRef<NodeJS.Timeout | null>(null);
   const turnThePage = () => {
       setPage((prevPage) => {
         if (prevPage < pages.length - 1) {
