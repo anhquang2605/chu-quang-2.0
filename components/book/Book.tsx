@@ -275,16 +275,8 @@ const Book: React.FC = () => {
       });
   }
   const animatePage = () => {
-    timeerRef.current = setInterval(() => {
-      turnThePage();
-    }, 3000); // Change page every 3 seconds
-
-    return () => {
-      if (timeerRef.current) {
-        clearInterval(timeerRef.current);
-        timeerRef.current = null;
-      }
-    }
+        const halfway = Math.floor(pages.length / 2);
+        setPage(halfway);
   }
   
   useEffect(() => {
