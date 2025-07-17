@@ -263,6 +263,24 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
 };
 
 const Book: React.FC = () => {
+    // Spine dimensions based on page dimensions
+  const SPINE_WIDTH = PAGE_THICKNESS * pages.length * 1.1; // Slightly thicker than all pages combined
+  const SPINE_HEIGHT = PAGE_HEIGHT;
+  const SPINE_DEPTH = 0.02; // Small depth for the spine
+
+  // Create spine geometry and material
+  const spineGeometry = useMemo(() => new THREE.BoxGeometry(
+    SPINE_WIDTH, 
+    SPINE_HEIGHT, 
+    SPINE_DEPTH
+  ), []);
+
+  const spineMaterial = useMemo(() => new THREE.MeshStandardMaterial({
+    color: '#222',
+    roughness: 0.8,
+    metalness: 0.1
+  }), []);
+  
   const [page, setPage] = useAtom(pageAtom);
   const timeerRef = useRef<NodeJS.Timeout | null>(null);
   const turnThePage = () => {
