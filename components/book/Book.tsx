@@ -263,11 +263,15 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
 };
 
 const Book: React.FC = () => {
-   // Spine parameters
-  const SPINE_RADIUS = PAGE_THICKNESS * pages.length * 0.5; // Curvature radius
+  // Spine parameters
+  const SPINE_RADIUS = PAGE_THICKNESS * pages.length * 0.5;
   const SPINE_HEIGHT = PAGE_HEIGHT;
-  const SPINE_WIDTH = Math.PI * SPINE_RADIUS * 0.5; // 90 degree arc length
-  const SPINE_SEGMENTS = 32; // Smoothness of the curve
+  const SPINE_SEGMENTS = 32;
+  const SPINE_ANGLE = Math.PI * 0.5; // 90 degrees of arc
+
+  // Calculate spine position based on book thickness
+  const totalBookThickness = PAGE_THICKNESS * pages.length;
+  const spineOffset = totalBookThickness * 0.5;
 
   // Create curved spine geometry
   const spineGeometry = useMemo(() => {
@@ -278,13 +282,13 @@ const Book: React.FC = () => {
       SPINE_SEGMENTS,
       1,
       true, // Open ended
-      Math.PI * 0.5, // 90 degrees
-      Math.PI // Half circle (180 degrees)
+      Math.PI * 0.5 - SPINE_ANGLE * 0.5, // Start angle
+      SPINE_ANGLE // Arc length
     );
     
-    // Rotate and position the geometry
-    geometry.rotateY(Math.PI * 0.25); // Rotate 45 degrees
-    geometry.translate(0, 0, -SPINE_RADIUS * 0.7); // Position behind pages
+    // Rotate to stand upright and position correctly
+    geometry.rotateX(Math.PI * 0.5);
+    geometry.rotateY(Math.PI * 0.5);
     return geometry;
   }, []);
 
@@ -318,12 +322,12 @@ const Book: React.FC = () => {
   return (
       <group>
         {/* SPINE */}
-         <mesh
-        geometry={spineGeometry}
-        material={spineMaterial}
-        position={[0, 0, 0]}
-        castShadow
-      />
+          <mesh
+          geometry={spineGeometry}
+          material={spineMaterial}
+          position={[-spineOffset, 0, 0]} // Position between covers
+          castShadow
+          />
         {/* PAGES */}
         {
           [...pages].map((pageD, index) => (
