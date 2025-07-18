@@ -265,7 +265,7 @@ const Page: React.FC<PageProps> = ({ number, data, front, back, page, opened = f
 
 const Book: React.FC = () => {
   const [page, setPage] = useAtom(pageAtom);
-  const [pages, setPages] = useState<PageProps[]>(pages);
+  const [pageList, setPageList] = useState<PageProps[]>(pages);
   // Spine parameters
   const SPINE_RADIUS = PAGE_THICKNESS * pages.length * 0.5;
   const SPINE_HEIGHT = PAGE_HEIGHT;
