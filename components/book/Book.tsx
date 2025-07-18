@@ -307,6 +307,7 @@ const Book: React.FC = () => {
         // Return the page that keeps the book open at midpoint
         return virtualPage;
       });
+
   }
   const animatePage = () => {
         const halfway = Math.floor(pages.length / 2);
