@@ -6,6 +6,7 @@ import { Environment, OrbitControls, useTexture } from '@react-three/drei';
 import { degToRad } from 'three/src/math/MathUtils.js';
 import { atom , useAtom } from 'jotai';
 import { easing } from 'maath';
+import styles from './book.module.css';
 type PageProps = {
   rotation?: number;
   number: number;
@@ -300,13 +301,17 @@ const Book: React.FC = () => {
   const [page, setPage] = useAtom(pageAtom);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-  const turnThePage = () => {
+  const turnThePage = () => { 
       setPage((prevPage) => {
         const virtualPage = (prevPage >= pages.length - 1) ? 0 : prevPage + 1;
 
         // Return the page that keeps the book open at midpoint
+        const thePage = virtualPage;
+        //get the page element
+
         return virtualPage;
       });
+
 
   }
   const animatePage = () => {
