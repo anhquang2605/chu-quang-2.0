@@ -9,11 +9,11 @@ import { easing } from 'maath';
 import styles from './book.module.css';
 type PageProps = {
   rotation?: number;
-  number: number;
+  number?: number;
   data?: any;
   front?: string;
   back?: string;
-  page: number;
+  page?: number;
   opened?: boolean;
   bookClosed?: boolean;
   isCover?: boolean;
