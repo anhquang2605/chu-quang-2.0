@@ -320,7 +320,6 @@ const Book: React.FC = () => {
       const currentPage = tempList.splice(pageNumber, 1);
       tempList.push(currentPage[0]);
       setPageList(tempList);
-      console.log('Moved page to the end:', currentPage[0]);
     } else {
       //move the page to the destination
       const tempList = [...pageList];
