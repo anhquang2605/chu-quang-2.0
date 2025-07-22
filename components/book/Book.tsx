@@ -316,6 +316,23 @@ const Book: React.FC = () => {
 
 
   }
+
+  const movePageTo = (pageNumber: number, destination?: number) => {
+    if(!destination){
+      //move to the end of the book
+      const tempList = [...pageList];
+      //take the current page and move it to the end of the book
+      const currentPage = tempList.splice(pageNumber, 1);
+      tempList.push(currentPage[0]);
+      setPageList(tempList);
+    } else {
+      //move the page to the destination
+      const tempList = [...pageList];
+      const currentPage = tempList.splice(pageNumber, 1);
+      tempList.splice(destination, 0, currentPage[0]);
+      setPageList(tempList);
+    }
+  }
   const animatePage = () => {
         const halfway = Math.floor(pages.length / 2);
         setPage(halfway);
