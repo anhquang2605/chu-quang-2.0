@@ -306,11 +306,6 @@ const Book: React.FC = () => {
   const turnThePage = () => { 
       setPage((prevPage) => {
         const virtualPage = (prevPage >= pages.length - 1) ? 0 : prevPage + 1;
-
-        // Return the page that keeps the book open at midpoint
-        const thePage = virtualPage;
-        //get the page element
-
         return virtualPage;
       });
 
