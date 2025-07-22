@@ -265,7 +265,7 @@ const Page: React.FC<PageProps> = ({ number = 0, data, front, back, page = 0, op
 
 const Book: React.FC = () => {
   const [page, setPage] = useAtom(pageAtom);
-  const [pageList, setPageList] = useState<PageProps[]>(pages);
+  const pageList = useRef<PageProps[]>(pages);
   // Spine parameters
   const SPINE_RADIUS = PAGE_THICKNESS * pages.length * 0.5;
   const SPINE_HEIGHT = PAGE_HEIGHT;
@@ -315,17 +315,17 @@ const Book: React.FC = () => {
   const movePageTo = (pageNumber: number, destination?: number) => {
     if(!destination){
       //move to the end of the book
-      const tempList = [...pageList];
+      const tempList = [...pageList.current];
       //take the current page and move it to the end of the book
       const currentPage = tempList.splice(pageNumber, 1);
       tempList.push(currentPage[0]);
-      setPageList(tempList);
+      pageList.current = tempList;
     } else {
       //move the page to the destination
-      const tempList = [...pageList];
+      const tempList = [...pageList.current];
       const currentPage = tempList.splice(pageNumber, 1);
       tempList.splice(destination, 0, currentPage[0]);
-      setPageList(tempList);
+      pageList.current = tempList;
     }
   }
   const animatePage = () => {
@@ -354,7 +354,7 @@ const Book: React.FC = () => {
           />
         {/* PAGES */}
         {
-          [...pageList].map((pageD, index) => (
+          [...pageList.current].map((pageD, index) => (
             <Page 
               key={index} 
               page={page} 
