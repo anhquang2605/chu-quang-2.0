@@ -355,7 +355,7 @@ const Book: React.FC = () => {
           />
         {/* PAGES */}
         {
-          [...pageList.current].map((pageD, index) => (
+          pageList.current.map((pageD, index) => (
             <Page 
               key={index} 
               page={page} 
