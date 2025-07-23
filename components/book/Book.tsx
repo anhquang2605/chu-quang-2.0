@@ -339,6 +339,7 @@ const Book: React.FC = () => {
     animatePage();
   },[]);
   useEffect(()=>{
+    console.log(pages.length);
     movePageTo(page);
   },[page])
   return (
