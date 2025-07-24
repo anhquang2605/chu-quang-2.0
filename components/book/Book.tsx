@@ -250,6 +250,7 @@ const Page: React.FC<PageProps> = ({ number = 0, data, front, back, page = 0, op
       // Clean up the skinned mesh reference when the component unmounts
       if (skinnedMeshRef.current) {
         skinnedMeshRef.current.geometry.dispose();
+        skinnedMeshRef.current.clear();
       }
       if (manualSkinnedMesh) {
         manualSkinnedMesh.geometry.dispose();
