@@ -339,8 +339,8 @@ const Book: React.FC = () => {
    
   },[]);
   useEffect(()=>{
-    //movePageTo(page);
-  },[])
+    movePageTo(page);
+  },[page])
   return (
       <group>
         {/* SPINE */}
