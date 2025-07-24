@@ -299,17 +299,12 @@ const Book: React.FC = () => {
     side: THREE.DoubleSide
   }), []);
 
-
-
-
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const turnThePage = () => { 
       setPage((prevPage) => {
         const virtualPage = (prevPage >= pages.length - 1) ? 0 : prevPage + 1;
         return virtualPage;
       });
-
-
   }
 
   const movePageTo = (pageNumber: number, destination?: number) => {
@@ -331,7 +326,7 @@ const Book: React.FC = () => {
   }
   const animatePage = () => {
         const halfway = Math.floor(pages.length / 2);
-        setPage(halfway);
+        //setPage(halfway);
         timerRef.current = setInterval(turnThePage, 3000);
         return () => {
           if (timerRef.current) clearInterval(timerRef.current);
