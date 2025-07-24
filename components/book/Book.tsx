@@ -4,7 +4,7 @@ import * as THREE from 'three';
 import { pageAtom, pages } from './book-asset/pages';
 import { Environment, OrbitControls, useTexture } from '@react-three/drei';
 import { degToRad } from 'three/src/math/MathUtils.js';
-import { atom , useAtom } from 'jotai';
+import { useAtom } from 'jotai';
 import { easing } from 'maath';
 import styles from './book.module.css';
 type PageProps = {
@@ -253,6 +253,7 @@ const Page: React.FC<PageProps> = ({ number = 0, data, front, back, page = 0, op
       }
       if (manualSkinnedMesh) {
         manualSkinnedMesh.geometry.dispose();
+      
       }
     }
   },[])
