@@ -255,6 +255,13 @@ const Page: React.FC<PageProps> = ({ number = 0, data, front, back, page = 0, op
       }
       if (manualSkinnedMesh) {
         manualSkinnedMesh.geometry.dispose();
+      
+        const material = manualSkinnedMesh.material;
+        if (Array.isArray(material)) {
+          material.forEach((mat) => mat.dispose());
+        } else {
+          material.dispose();
+        }
       }
       manualSkinnedMesh.clear();
     }
