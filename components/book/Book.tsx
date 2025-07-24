@@ -253,8 +253,8 @@ const Page: React.FC<PageProps> = ({ number = 0, data, front, back, page = 0, op
       }
       if (manualSkinnedMesh) {
         manualSkinnedMesh.geometry.dispose();
-      
       }
+      manualSkinnedMesh.clear();
     }
   },[])
   return (
