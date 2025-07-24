@@ -247,18 +247,7 @@ const Page: React.FC<PageProps> = ({ number = 0, data, front, back, page = 0, op
   //const pageDepth = number === 0 || number === pages.length - 1 ? PAGE_THICKNESS * 10 : PAGE_THICKNESS;
   const pageDepth = PAGE_THICKNESS;
   useEffect(()=>{
-    return () => {
-      // Clean up the skinned mesh reference when the component unmounts
-      if (skinnedMeshRef.current) {
-        skinnedMeshRef.current.geometry.dispose();
-        skinnedMeshRef.current.clear();
-      }
-      if (manualSkinnedMesh) {
-        manualSkinnedMesh.geometry.dispose();
-    
-      }
-      manualSkinnedMesh.clear();
-    }
+
   },[])
   return (
      
@@ -352,10 +341,7 @@ const Book: React.FC = () => {
   useEffect(() => {
     animatePage();
     //clear the canvas when the component unmounts
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-      
-    }
+   
   },[]);
   useEffect(()=>{
     //movePageTo(page);
