@@ -243,6 +243,7 @@ const Page: React.FC<PageProps> = ({ number = 0, data, front, back, page = 0, op
     }
     
   });
+  
   //const pageDepth = number === 0 || number === pages.length - 1 ? PAGE_THICKNESS * 10 : PAGE_THICKNESS;
   const pageDepth = PAGE_THICKNESS;
   useEffect(()=>{
