@@ -371,7 +371,7 @@ const Book: React.FC = () => {
           />
         {/* PAGES */}
         {
-          pageList.map((pageD, index) => (
+          pages.map((pageD, index) => (
             <Page 
               key={page} 
               page={page} 
