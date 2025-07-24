@@ -326,7 +326,7 @@ const Book: React.FC = () => {
   }
   const animatePage = () => {
         const halfway = Math.floor(pages.length / 2);
-        //setPage(halfway);
+        setPage(halfway);
         timerRef.current = setInterval(turnThePage, 3000);
         return () => {
           if (timerRef.current) clearInterval(timerRef.current);
@@ -354,7 +354,7 @@ const Book: React.FC = () => {
         {
           pages.map((pageD, index) => (
             <Page 
-              key={page} 
+              key={index}
               page={page} 
               opened={page > index}  
               number={index} 
