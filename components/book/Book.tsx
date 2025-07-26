@@ -266,7 +266,11 @@ const Page: React.FC<PageProps> = ({ number = 0, data, front, back, page = 0, op
 const Book: React.FC = () => {
   const [page, setPage] = useAtom(pageAtom);
   const [pageList, setPageList] = useState<PageProps[]>(pages);
-  const [bookUID, setBookUID] = useState<string>(Math.random().toString(36).substring(2, 15));
+  const [bookUID, setBookUID] = useState<string>("");
+  //book UID generator
+  const generateBookUID = () => {
+    return Math.random().toString(36).substring(2, 15);
+  }
   // Spine parameters
   const SPINE_RADIUS = PAGE_THICKNESS * pages.length * 0.5;
   const SPINE_HEIGHT = PAGE_HEIGHT;
