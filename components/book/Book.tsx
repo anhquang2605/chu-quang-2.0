@@ -360,7 +360,7 @@ const Book: React.FC = () => {
         {
           pageList.map((pageD, index) => (
             <Page 
-              key={index}
+              key={`${bookUID}-${index}`}
               page={page} 
               opened={page > index}  
               number={index} 
