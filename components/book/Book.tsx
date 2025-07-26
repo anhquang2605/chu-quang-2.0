@@ -354,7 +354,7 @@ const Book: React.FC = () => {
         {
           pages.map((pageD, index) => (
             <Page 
-              key={index}
+              key={pageD.front}
               page={page} 
               opened={page > index}  
               number={index} 
