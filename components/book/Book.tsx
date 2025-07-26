@@ -348,7 +348,7 @@ const Book: React.FC = () => {
     movePageTo(page);
   },[page])
   return (
-      <group key={bookUID}>
+      <group >
         {/* SPINE */}
           <mesh
           geometry={spineGeometry}
