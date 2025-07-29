@@ -323,8 +323,8 @@ const Book: React.FC = () => {
       const currentPage = tempList.splice(pageNumber, 1);
       //add the current page to the one before the last page
       tempList.splice(tempList.length - 2, 0, currentPage[0]);
-      //setPageList(tempList);
-      setBookUID(generateBookUID());
+      setPageList(tempList);
+      //setBookUID(generateBookUID());
     } else {
       //move the page to the destination
       const tempList = [...pageList];
