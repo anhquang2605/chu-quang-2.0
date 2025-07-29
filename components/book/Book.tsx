@@ -87,11 +87,7 @@ type PageProps = {
         new THREE.MeshStandardMaterial({ color: whiteColor}),
     new THREE.MeshStandardMaterial({ color: whiteColor}),
   ]
-  pages.forEach((page, index) => {
-    useTexture.preload(`textures/${page.front}.jpg`);
-    useTexture.preload(`textures/${page.back}.jpg`);
-    useTexture.preload(`textures/book-cover-roughness.jpg`);
-  })
+
 
 const Page: React.FC<PageProps> = ({ number = 0, data, front, back, page = 0, opened = false, bookClosed = false}) => {
   const isCover = number === 0 || number === pages.length - 1;
@@ -264,6 +260,13 @@ const Page: React.FC<PageProps> = ({ number = 0, data, front, back, page = 0, op
 };
 
 const Book: React.FC = () => {
+  //preset the pages
+  pages.forEach((page, index) => {
+    useTexture.preload(`textures/${page.front}.jpg`);
+    useTexture.preload(`textures/${page.back}.jpg`);
+    useTexture.preload(`textures/book-cover-roughness.jpg`);
+  })
+  //states
   const [page, setPage] = useAtom(pageAtom);
   const [pageList, setPageList] = useState<PageProps[]>(pages);
   const [bookUID, setBookUID] = useState<string>("");
