@@ -344,6 +344,7 @@ const Book: React.FC = () => {
   
   useEffect(() => {
     animatePage();
+    //we confirm that the book is not remounted
     //clear the canvas when the component unmounts
   },[]);
   useEffect(()=>{
