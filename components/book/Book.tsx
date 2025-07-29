@@ -345,6 +345,8 @@ const Book: React.FC = () => {
   useEffect(() => {
     animatePage();
     //we confirm that the book is not remounted
+    //we also know that the setPageList is not doing anything to change the page despite changing the book ID everytime
+    //When setting book ID, the book keep reseting its opening state
     //clear the canvas when the component unmounts
   },[]);
   useEffect(()=>{
