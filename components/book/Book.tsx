@@ -318,7 +318,7 @@ const Book: React.FC = () => {
   const movePageTo = (pageNumber: number, destination?: number) => {
     if(!destination){
       //move to the end of the book
-      console.log(pageList);
+      console.log("pageList ", pageList);
       const tempList = [...pageList];
       //take the current page and move it to the end of the book
       const currentPage = tempList.splice(pageNumber, 1);
@@ -367,7 +367,7 @@ const Book: React.FC = () => {
         {
           pageList.map((pageD, index) => (
             <Page 
-              key={`${bookUID}  ${index}`}
+              key={`${pageD.front}  ${index}`}
               page={page} 
               opened={page > index}  
               number={index} 
