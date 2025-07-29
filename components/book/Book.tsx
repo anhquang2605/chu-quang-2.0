@@ -318,11 +318,13 @@ const Book: React.FC = () => {
   const movePageTo = (pageNumber: number, destination?: number) => {
     if(!destination){
       //move to the end of the book
+      console.log(pageList);
       const tempList = [...pageList];
       //take the current page and move it to the end of the book
       const currentPage = tempList.splice(pageNumber, 1);
       //add the current page to the one before the last page
       tempList.splice(tempList.length - 2, 0, currentPage[0]);
+      console.log(tempList)
       setPageList(tempList);
       //setBookUID(generateBookUID());
     } else {
@@ -336,7 +338,7 @@ const Book: React.FC = () => {
   const animatePage = () => {
         const halfway = Math.floor(pages.length / 2);
         setPage(halfway);
-        timerRef.current = setInterval(turnThePage, 3000);
+        timerRef.current = setTimeout(turnThePage, 3000);
         return () => {
           if (timerRef.current) clearInterval(timerRef.current);
         };
