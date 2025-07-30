@@ -311,10 +311,7 @@ const Book: React.FC = () => {
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const turnThePage = () => { 
-      setPage((prevPage) => {
-        const virtualPage = (prevPage >= pages.length - 1) ? 0 : prevPage + 1;
-        return virtualPage;
-      });
+     setVirtualPage((prev) => prev + 1); // just keeps incrementing
   }
 
   const movePageTo = (pageNumber: number, destination?: number) => {
@@ -364,22 +361,23 @@ const Book: React.FC = () => {
           castShadow
           />
         {/* PAGES */}
-        {
-          pageList.map((pageD, index) => (
-            <Page 
-              key={`${pageD.front} ${pageD.back}  ${index}`}
-              page={page} 
-              opened={page > index}  
-              number={index} 
-              front={pageD.front} 
-              bookClosed={
-                page === 0 || page === pages.length - 1
-              }  
-              back={pageD.back} />
-              
-          )) 
+         {pages.map((pageD, index) => {
+        // shift page index by virtualPage
+        const pageIndex = (index + virtualPage) % pages.length;
+        const opened = pageIndex <= MIDDLE_PAGE;
 
-        }
+        return (
+          <Page
+            key={`${pageD.front}-${index}`}
+            page={virtualPage}
+            number={index}
+            opened={opened}
+            front={pages[pageIndex].front}
+            back={pages[pageIndex].back}
+            bookClosed={false}
+          />
+        );
+      })}
       </group>
   );
 };
