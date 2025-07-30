@@ -17,6 +17,7 @@ type PageProps = {
   opened?: boolean;
   bookClosed?: boolean;
   isCover?: boolean;
+  theref?: React.Ref<THREE.Group>;
 };
 
 //set up before page
@@ -91,7 +92,7 @@ type PageProps = {
   ]
 
 
-const Page = React.forwardRef< THREE.Group,PageProps> (( props, theref) => {
+const Page = React.forwardRef< THREE.Group,PageProps> (( props, ref) => {
   const { front, back, number = 0, page = 0, opened, bookClosed } = props;
   const isCover = number === 0 || number === pages.length - 1;
   //tried moving textures to the same folder, still have problem loading the pictures
@@ -105,7 +106,7 @@ const Page = React.forwardRef< THREE.Group,PageProps> (( props, theref) => {
   ])
   //to set the color space of the textures to sRGB, changing them from  too bright to normal colorating
   picture.colorSpace = picture2.colorSpace = THREE.SRGBColorSpace
-  const ref = useRef<THREE.Mesh>(null);
+  const meshRef = useRef<THREE.Mesh>(null);
   const turnedAt = useRef<number>(0);
   const lastOpened = useRef(opened);
   const skinnedMeshRef = useRef<THREE.SkinnedMesh>(null);
@@ -193,9 +194,9 @@ const Page = React.forwardRef< THREE.Group,PageProps> (( props, theref) => {
     }
      if (isCover) {
       // For covers, simple rotation without bending
-      if (ref.current) {
+      if (meshRef.current) {
          easing.dampAngle(
-          ref.current.rotation,
+          meshRef.current.rotation,
           'y',
           targetRotation,
           0.3, // Slower easing for more solid feel
@@ -206,7 +207,7 @@ const Page = React.forwardRef< THREE.Group,PageProps> (( props, theref) => {
     }
     const bones = skinnedMeshRef.current.skeleton.bones;
     for (let i = 0; i < bones.length; i++) {
-      const target = i === 0 ? ref.current : bones[i];
+      const target = i === 0 ? meshRef.current : bones[i];
       const insideCurveIntensity = i < 8 ? Math.sin(i * 0.2 + 0.25) : 0;
       const outsideCurveIntensity = i >= 8 ? Math.cos(i * 0.3 + 0.09) : 0;
       const turningIntensity = Math.sin(i * Math.PI * (1 / bones.length)) * turningTime;
@@ -250,7 +251,7 @@ const Page = React.forwardRef< THREE.Group,PageProps> (( props, theref) => {
   },[])
   return (
      
-    <group ref={theref} >
+    <group ref={ref} >
       <primitive 
         object={manualSkinnedMesh} 
         ref={skinnedMeshRef} 
@@ -273,7 +274,7 @@ const Book: React.FC = () => {
   const [page, setPage] = useAtom(pageAtom);
   const [pageList, setPageList] = useState<PageProps[]>(pages);
   const [bookUID, setBookUID] = useState<string>("");
-  const pagRefs = useRef<(THREE.Group | null)[]>([]);
+  const pageRefs = useRef<(THREE.Group | null)[]>([]);
   //book UID generator
   const generateBookUID = () => {
     return Math.random().toString(36).substring(2, 15);
@@ -320,21 +321,42 @@ const Book: React.FC = () => {
   }
 
   const movePageTo = (pageNumber: number, destination?: number) => {
+     if (!pageRefs.current[pageNumber]) return;
+
+    const pageToMove = pageRefs.current[pageNumber];
+    if (!pageToMove) return;
+
+    // Remove from current parent
+    pageToMove.parent?.remove(pageToMove);
+    const tempList = [...pageList]; 
+    const currentPage = tempList.splice(pageNumber, 1);
+    if (!destination) {
+      // Move to the end of the book
+      const newZPosition = -(pages.length - 1) * PAGE_THICKNESS;
+      pageToMove.position.z = newZPosition;
+      pageRefs.current[pageNumber]?.parent?.add(pageToMove);
+      //state modification
+      tempList.splice(pageNumber + 2, 0, currentPage[0]);    
+    } else {
+      // Move to specific destination
+      const newZPosition = -destination * PAGE_THICKNESS;
+      pageToMove.position.z = newZPosition;
+            //modification of the state
+      pageRefs.current[destination]?.parent?.add(pageToMove);
+      tempList.splice(destination, 0, currentPage[0]);
+    }
+    setPageList(tempList);
     if(!destination){
       //move to the end of the book
       const tempList = [...pageList];
       //take the current page and move it to the end of the book
       const currentPage = tempList.splice(pageNumber, 1);
       //add the current page to the one before the last page
-      tempList.splice(pageNumber + 2, 0, currentPage[0]);
-      setPageList(tempList);
+    
       setBookUID(generateBookUID());
     } else {
       //move the page to the destination
-      const tempList = [...pageList];
-      const currentPage = tempList.splice(pageNumber, 1);
-      tempList.splice(destination, 0, currentPage[0]);
-      setPageList(tempList);
+
     }
   }
   const animatePage = () => {
@@ -378,8 +400,10 @@ const Book: React.FC = () => {
               front={pageD.front} 
               bookClosed={
                 page === 0 || page === pages.length - 1
-              }  
+              }
+              ref={(el: THREE.Group) => (pageRefs.current[index] = el)}
               back={pageD.back} />
+              
               
           )) 
 
