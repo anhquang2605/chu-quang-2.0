@@ -1,4 +1,9 @@
 import { atom } from "jotai";
+interface pageType  {
+  front: string;
+  back: string;
+  number?: number;
+}
 const pictures = [
   "DSC00680",
   "DSC00933",
@@ -57,7 +62,7 @@ const pictures = [
   "DSC02069",
 ];
 export const pageAtom = atom(0);
-export const pages = [
+export const pages: pageType[] = [
   {
     front: "book-cover",
     back: pictures[0],
@@ -75,3 +80,7 @@ pages.push({
   front: pictures[pictures.length - 1],
   back: "book-back",
 });
+pages.forEach((page, index) => {
+  page.number = index;
+
+})

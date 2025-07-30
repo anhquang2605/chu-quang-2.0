@@ -353,7 +353,7 @@ const Book: React.FC = () => {
     movePageTo(page);
   },[page])
   return (
-      <group key={bookUID}>
+      <group >
         {/* SPINE */}
           <mesh
           geometry={spineGeometry}
@@ -365,7 +365,7 @@ const Book: React.FC = () => {
         {
           pageList.map((pageD, index) => (
             <Page 
-              key={`  ${index}`}
+              key={`  ${pageD.number}`}
               page={page} 
               opened={page > index}  
               number={index} 
