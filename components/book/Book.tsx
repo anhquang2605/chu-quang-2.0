@@ -268,10 +268,8 @@ const Book: React.FC = () => {
   })
   //states
   const [page, setPage] = useAtom(pageAtom);
-  const [virtualPage, setVirtualPage] = useState(0);
   const [pageList, setPageList] = useState<PageProps[]>(pages);
   const [bookUID, setBookUID] = useState<string>("");
-   const MIDDLE_PAGE = Math.floor(pages.length / 2);
   //book UID generator
   const generateBookUID = () => {
     return Math.random().toString(36).substring(2, 15);
@@ -311,7 +309,10 @@ const Book: React.FC = () => {
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const turnThePage = () => { 
-     setVirtualPage((prev) => prev + 1); // just keeps incrementing
+      setPage((prevPage) => {
+        const virtualPage = (prevPage >= pages.length - 1) ? 0 : prevPage + 1;
+        return virtualPage;
+      });
   }
 
   const movePageTo = (pageNumber: number, destination?: number) => {
@@ -352,7 +353,7 @@ const Book: React.FC = () => {
     movePageTo(page);
   },[page])
   return (
-      <group key={bookUID}>
+      <group >
         {/* SPINE */}
           <mesh
           geometry={spineGeometry}
@@ -361,23 +362,22 @@ const Book: React.FC = () => {
           castShadow
           />
         {/* PAGES */}
-         {pages.map((pageD, index) => {
-        // shift page index by virtualPage
-        const pageIndex = (index + virtualPage) % pages.length;
-        const opened = pageIndex <= MIDDLE_PAGE;
+        {
+          pageList.map((pageD, index) => (
+            <Page 
+              key={`${pageD.front}  ${index}`}
+              page={page} 
+              opened={page > index}  
+              number={index} 
+              front={pageD.front} 
+              bookClosed={
+                page === 0 || page === pages.length - 1
+              }  
+              back={pageD.back} />
+              
+          )) 
 
-        return (
-          <Page
-            key={`${pageD.front}-${index}`}
-            page={virtualPage}
-            number={index}
-            opened={opened}
-            front={pages[pageIndex].front}
-            back={pages[pageIndex].back}
-            bookClosed={false}
-          />
-        );
-      })}
+        }
       </group>
   );
 };
