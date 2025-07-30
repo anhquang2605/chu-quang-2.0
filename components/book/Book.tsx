@@ -268,8 +268,10 @@ const Book: React.FC = () => {
   })
   //states
   const [page, setPage] = useAtom(pageAtom);
+  const [virtualPage, setVirtualPage] = useState(0);
   const [pageList, setPageList] = useState<PageProps[]>(pages);
   const [bookUID, setBookUID] = useState<string>("");
+   const MIDDLE_PAGE = Math.floor(pages.length / 2);
   //book UID generator
   const generateBookUID = () => {
     return Math.random().toString(36).substring(2, 15);
@@ -353,7 +355,7 @@ const Book: React.FC = () => {
     movePageTo(page);
   },[page])
   return (
-      <group >
+      <group key={bookUID}>
         {/* SPINE */}
           <mesh
           geometry={spineGeometry}
