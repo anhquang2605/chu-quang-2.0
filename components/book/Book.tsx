@@ -322,9 +322,9 @@ const Book: React.FC = () => {
       //take the current page and move it to the end of the book
       const currentPage = tempList.splice(pageNumber, 1);
       //add the current page to the one before the last page
-      tempList.splice(tempList.length - 2, 0, currentPage[0]);
+      tempList.splice(pageNumber + 2, 0, currentPage[0]);
       setPageList(tempList);
-      //setBookUID(generateBookUID());
+      setBookUID(generateBookUID());
     } else {
       //move the page to the destination
       const tempList = [...pageList];
@@ -353,7 +353,7 @@ const Book: React.FC = () => {
     movePageTo(page);
   },[page])
   return (
-      <group >
+      <group key={bookUID}>
         {/* SPINE */}
           <mesh
           geometry={spineGeometry}
