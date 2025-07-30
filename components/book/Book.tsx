@@ -17,7 +17,6 @@ type PageProps = {
   opened?: boolean;
   bookClosed?: boolean;
   isCover?: boolean;
-  theref?: React.Ref<THREE.Group>;
 };
 
 //set up before page
@@ -401,7 +400,7 @@ const Book: React.FC = () => {
               bookClosed={
                 page === 0 || page === pages.length - 1
               }
-              ref={(el: THREE.Group) => (pageRefs.current[index] = el)}
+              ref={(el) => {pageRefs.current[index] = el}}
               back={pageD.back} />
               
               
