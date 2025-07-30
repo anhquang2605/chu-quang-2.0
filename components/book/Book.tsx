@@ -95,16 +95,16 @@ const Page = React.forwardRef< THREE.Group,PageProps> (( props, ref) => {
   const { front, back, number = 0, page = 0, opened, bookClosed } = props;
   const isCover = number === 0 || number === pages.length - 1;
   //tried moving textures to the same folder, still have problem loading the pictures
-  const [picture, picture2, pictureRoughness] = useTexture([
+/*   const [picture, picture2, pictureRoughness] = useTexture([
     `/textures/${front}.jpg`,
     `/textures/${back}.jpg`,
    ...(
     number === 0 || number === pages.length - 1 ?
      [`/textures/book-cover-roughness.jpg`] : []
    )
-  ])
+  ]) */
   //to set the color space of the textures to sRGB, changing them from  too bright to normal colorating
-  picture.colorSpace = picture2.colorSpace = THREE.SRGBColorSpace
+  /* picture.colorSpace = picture2.colorSpace = THREE.SRGBColorSpace */
   const meshRef = useRef<THREE.Mesh>(null);
   const turnedAt = useRef<number>(0);
   const lastOpened = useRef(opened);
@@ -135,7 +135,7 @@ const Page = React.forwardRef< THREE.Group,PageProps> (( props, ref) => {
     const skeleton = new THREE.Skeleton(bones);
     // Create a skinned mesh with the page geometry and the skeleton
     // Use the pageGeometry and coverPageGeometry based on the page number
-    const materials = [...pageMaterials,
+/*     const materials = [...pageMaterials,
       new THREE.MeshStandardMaterial({
         color: whiteColor,
         map: picture,
@@ -162,7 +162,9 @@ const Page = React.forwardRef< THREE.Group,PageProps> (( props, ref) => {
             }
          )
       })
-     ];
+     ]; */
+
+    const materials = [...pageMaterials]
      
     let mesh: THREE.SkinnedMesh = new THREE.SkinnedMesh(pageGeometry, materials);
     mesh.castShadow = true;
@@ -335,9 +337,6 @@ const Book: React.FC = () => {
       //state modification
       tempList.splice(pageNumber + 2, 0, currentPage[0]);    
     } else {
-      // Move to specific destination
-      const newZPosition = -destination * PAGE_THICKNESS;
-      pageToMove.position.z = newZPosition;
             //modification of the state
       pageRefs.current[destination]?.parent?.add(pageToMove);
       tempList.splice(destination, 0, currentPage[0]);
@@ -380,12 +379,10 @@ const Book: React.FC = () => {
               page={page} 
               opened={page > index}  
               number={index} 
-              front={pageD.front} 
               bookClosed={
                 page === 0 || page === pages.length - 1
               }
-              ref={(el) => {pageRefs.current[index] = el}}
-              back={pageD.back} />
+              ref={(el) => {pageRefs.current[index] = el}} />
               
               
           )) 
