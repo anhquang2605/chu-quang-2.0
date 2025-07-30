@@ -331,8 +331,6 @@ const Book: React.FC = () => {
     const currentPage = tempList.splice(pageNumber, 1);
     if (!destination) {
       // Move to the end of the book
-      const newZPosition = -(pages.length - 1) * PAGE_THICKNESS;
-      pageToMove.position.z = newZPosition;
       pageRefs.current[pageNumber]?.parent?.add(pageToMove);
       //state modification
       tempList.splice(pageNumber + 2, 0, currentPage[0]);    
@@ -375,9 +373,7 @@ const Book: React.FC = () => {
     //clear the canvas when the component unmounts
   },[]);
   useEffect(()=>{
-    if(page === midPoint  + 1){
-      movePageTo(page);
-    }
+      movePageTo(page - 1);
   },[page])
   return (
       <group >
