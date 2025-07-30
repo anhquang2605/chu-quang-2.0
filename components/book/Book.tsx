@@ -91,7 +91,8 @@ type PageProps = {
   ]
 
 
-const Page: React.FC<PageProps> = ({ number = 0, data, front, back, page = 0, opened = false, bookClosed = false}) => {
+const Page = React.forwardRef< THREE.Group,PageProps> (( props, theref) => {
+  const { front, back, number = 0, page = 0, opened, bookClosed } = props;
   const isCover = number === 0 || number === pages.length - 1;
   //tried moving textures to the same folder, still have problem loading the pictures
   const [picture, picture2, pictureRoughness] = useTexture([
@@ -249,7 +250,7 @@ const Page: React.FC<PageProps> = ({ number = 0, data, front, back, page = 0, op
   },[])
   return (
      
-    <group ref={ref} >
+    <group ref={theref} >
       <primitive 
         object={manualSkinnedMesh} 
         ref={skinnedMeshRef} 
@@ -259,7 +260,7 @@ const Page: React.FC<PageProps> = ({ number = 0, data, front, back, page = 0, op
         />
     </group>
   );
-};
+});
 
 const Book: React.FC = () => {
   //preset the pages
@@ -272,6 +273,7 @@ const Book: React.FC = () => {
   const [page, setPage] = useAtom(pageAtom);
   const [pageList, setPageList] = useState<PageProps[]>(pages);
   const [bookUID, setBookUID] = useState<string>("");
+  const pagRefs = useRef<(THREE.Group | null)[]>([]);
   //book UID generator
   const generateBookUID = () => {
     return Math.random().toString(36).substring(2, 15);
@@ -338,7 +340,7 @@ const Book: React.FC = () => {
   const animatePage = () => {
         const halfway = Math.floor(pages.length / 2);
         setPage(halfway);
-        timerRef.current = setTimeout(turnThePage, 3000);
+        timerRef.current = setInterval(turnThePage, 5000);
         return () => {
           if (timerRef.current) clearInterval(timerRef.current);
         };
@@ -352,7 +354,9 @@ const Book: React.FC = () => {
     //clear the canvas when the component unmounts
   },[]);
   useEffect(()=>{
-    movePageTo(midPoint);
+    if(page === midPoint  + 1){
+      movePageTo(page);
+    }
   },[page])
   return (
       <group >
