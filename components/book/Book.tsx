@@ -265,12 +265,12 @@ const Page = React.forwardRef< THREE.Group,PageProps> (( props, ref) => {
 });
 
 const Book: React.FC = () => {
-  //preset the pages
+/*   //preset the pages
   pages.forEach((page, index) => {
     useTexture.preload(`textures/${page.front}.jpg`);
     useTexture.preload(`textures/${page.back}.jpg`);
     useTexture.preload(`textures/book-cover-roughness.jpg`);
-  })
+  }) */
   //states
   const [page, setPage] = useAtom(pageAtom);
   const [pageList, setPageList] = useState<PageProps[]>(pages);
