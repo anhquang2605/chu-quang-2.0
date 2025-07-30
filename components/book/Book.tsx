@@ -26,6 +26,8 @@ type PageProps = {
   const turningCurveStrength = 0.09; // Adjust this value to control the strength of the turning curve
   const EASING_FACTOR = 0.5; // Adjust this value to control the smoothness of the rotation
   const EASING_FOLD_FACTOR = 0.3; // Adjust this value to control the smoothness of the fold rotation
+  //pages
+  const midPoint = Math.ceil(pages.length / 2);
   //page geometry
   const PAGE_WIDTH = 1.28;
   const PAGE_HEIGHT = 1.71;
@@ -173,7 +175,7 @@ const Page: React.FC<PageProps> = ({ number = 0, data, front, back, page = 0, op
  
   //Make the page turn one by one using the useFrame hook, the book has skeleton animation, so we can use the skinned mesh to animate the page turning
   useFrame((_, delta) => {
-    if (!skinnedMeshRef.current) return;
+    if (!skinnedMeshRef.current || !skinnedMeshRef.current.skeleton) return;
 
     if(lastOpened.current !== opened) {
       turnedAt.current = + new Date();//the plus sign here is to get the timestamp value
@@ -319,13 +321,11 @@ const Book: React.FC = () => {
     if(!destination){
       //move to the end of the book
       const tempList = [...pageList];
-      console.log("before", pageList);
       //take the current page and move it to the end of the book
       const currentPage = tempList.splice(pageNumber, 1);
       //add the current page to the one before the last page
       tempList.splice(pageNumber + 2, 0, currentPage[0]);
       setPageList(tempList);
-      console.log("after", pageList);
       setBookUID(generateBookUID());
     } else {
       //move the page to the destination
@@ -338,7 +338,7 @@ const Book: React.FC = () => {
   const animatePage = () => {
         const halfway = Math.floor(pages.length / 2);
         setPage(halfway);
-        timerRef.current = setInterval(turnThePage, 3000);
+        timerRef.current = setTimeout(turnThePage, 3000);
         return () => {
           if (timerRef.current) clearInterval(timerRef.current);
         };
@@ -352,7 +352,7 @@ const Book: React.FC = () => {
     //clear the canvas when the component unmounts
   },[]);
   useEffect(()=>{
-    movePageTo(page);
+    movePageTo(midPoint);
   },[page])
   return (
       <group >
