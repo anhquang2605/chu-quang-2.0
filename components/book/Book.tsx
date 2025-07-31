@@ -362,7 +362,7 @@ const Book: React.FC = () => {
     //clear the canvas when the component unmounts
   },[]);
   useEffect(()=>{
-      // /movePageTo(page);
+      movePageTo(page);
   },[page])
   return (
       <group >
