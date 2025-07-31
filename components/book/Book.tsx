@@ -97,14 +97,14 @@ const Page = React.forwardRef< THREE.Group,PageProps> (( props, ref) => {
   const { front, back, number = 0, page = 0, opened, bookClosed } = props;
   const isCover = number === 0 || number === pages.length - 1;
   //tried moving textures to the same folder, still have problem loading the pictures
-/*   const [picture, picture2, pictureRoughness] = useTexture([
+/*    const [picture, picture2, pictureRoughness] = useTexture([
     `/textures/${front}.jpg`,
     `/textures/${back}.jpg`,
    ...(
     number === 0 || number === pages.length - 1 ?
      [`/textures/book-cover-roughness.jpg`] : []
    )
-  ]) */
+  ])  */
   //to set the color space of the textures to sRGB, changing them from  too bright to normal colorating
   /* picture.colorSpace = picture2.colorSpace = THREE.SRGBColorSpace */
   const meshRef = useRef<THREE.Mesh>(null);
@@ -180,7 +180,7 @@ const Page = React.forwardRef< THREE.Group,PageProps> (( props, ref) => {
  
   //Make the page turn one by one using the useFrame hook, the book has skeleton animation, so we can use the skinned mesh to animate the page turning
   useFrame((_, delta) => {
-    if (!skinnedMeshRef.current || !skinnedMeshRef.current.skeleton) return;
+    if (!skinnedMeshRef.current) return;
 
     if(lastOpened.current !== opened) {
       turnedAt.current = + new Date();//the plus sign here is to get the timestamp value
@@ -362,7 +362,7 @@ const Book: React.FC = () => {
     //clear the canvas when the component unmounts
   },[]);
   useEffect(()=>{
-      movePageTo(page - 1);
+      // /movePageTo(page);
   },[page])
   return (
       <group >
@@ -377,7 +377,7 @@ const Book: React.FC = () => {
         {
           pageList.map((pageD, index) => (
             <Page 
-              key={`  ${pageD.number}`}
+              key={`  ${index}`}
               page={page} 
               opened={page > index}  
               number={index} 
