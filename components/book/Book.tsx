@@ -188,7 +188,7 @@ const Page = React.forwardRef< THREE.Group,PageProps> (( props, ref) => {
     }
     const newDate = + new Date();
     const dateDifference = newDate - turnedAt.current;
-    let turningTime = Math.min(400, dateDifference) / 400;;
+    let turningTime = Math.min(400, dateDifference) / 400;
      turningTime = Math.sin(turningTime * Math.PI);
 
     let targetRotation = opened ? -Math.PI / 2 : Math.PI / 2  ; // If the book is opened, rotate to 90 degrees, otherwise reset to 0
@@ -254,7 +254,7 @@ const Page = React.forwardRef< THREE.Group,PageProps> (( props, ref) => {
   },[])
   return (
      
-    <group ref={ref} >
+    <group ref={meshRef} >
       <primitive 
         object={manualSkinnedMesh} 
         ref={skinnedMeshRef} 
