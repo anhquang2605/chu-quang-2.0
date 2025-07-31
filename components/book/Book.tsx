@@ -80,6 +80,8 @@ type PageProps = {
     new THREE.MeshStandardMaterial({ color: '#111'}),
     new THREE.MeshStandardMaterial({ color: whiteColor}),
     new THREE.MeshStandardMaterial({ color: whiteColor}),
+        new THREE.MeshStandardMaterial({ color: whiteColor}),
+    new THREE.MeshStandardMaterial({ color: whiteColor}),
   ];
   const coverMaterial = [
      new THREE.MeshStandardMaterial({ color: whiteColor}),
