@@ -348,7 +348,7 @@ const Book: React.FC = () => {
   const animatePage = () => {
         const halfway = Math.floor(pages.length / 2);
         setPage(halfway);
-        timerRef.current = setInterval(turnThePage, 5000);
+        timerRef.current = setInterval(turnThePage, 1000);
         return () => {
           if (timerRef.current) clearInterval(timerRef.current);
         };
